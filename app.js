@@ -13,9 +13,12 @@
     basePace: 110,
     stages: [],
     checklist: {},
-    safety: { method: "email", contact: "", frequency: "none", remindersEnabled: false },
+    gearOpen: {},
+    safety: { frequency: "none", remindersEnabled: false, contacts: [] },
   };
-  if (!state.safety) state.safety = { method: "email", contact: "", frequency: "none", remindersEnabled: false };
+  if (!state.safety) state.safety = { frequency: "none", remindersEnabled: false, contacts: [] };
+  if (!Array.isArray(state.safety.contacts)) state.safety.contacts = [];
+  if (!state.gearOpen) state.gearOpen = {};
   if (state.basePace == null) state.basePace = 110;
   if (!SUPPORTED_LANGS.includes(state.lang)) state.lang = "pl";
 
@@ -25,7 +28,6 @@
       return raw ? JSON.parse(raw) : null;
     } catch (e) { return null; }
   }
-
   function save() {
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
     catch (e) { /* storage unavailable — continue without persistence */ }
@@ -42,44 +44,74 @@
     return div.innerHTML;
   }
 
-  // ---------------- i18n application ----------------
+  // ---------------- i18n ----------------
   function applyI18n() {
     document.documentElement.lang = state.lang;
-    document.querySelectorAll("[data-i18n]").forEach((el) => {
-      el.textContent = t(el.dataset.i18n);
+    document.querySelectorAll("[data-i18n]").forEach((el) => { el.textContent = t(el.dataset.i18n); });
+    document.querySelectorAll("[data-i18n-ph]").forEach((el) => { el.setAttribute("placeholder", t(el.dataset.i18nPh)); });
+    document.getElementById("lang-current").textContent = state.lang.toUpperCase();
+    document.querySelectorAll(".lang-option").forEach((btn) => {
+      btn.classList.toggle("active", btn.dataset.lang === state.lang);
     });
-    document.querySelectorAll("[data-i18n-ph]").forEach((el) => {
-      el.setAttribute("placeholder", t(el.dataset.i18nPh));
-    });
-    document.getElementById("lang-switch").value = state.lang;
   }
 
-  document.getElementById("lang-switch").addEventListener("change", (e) => {
-    state.lang = e.target.value;
-    save();
-    applyI18n();
-    renderSegmentInputs();
-    renderStages();
-    renderGear();
-    renderContacts();
-    updateReminderUI();
+  // ---------------- Bottom nav / screens ----------------
+  const navItems = document.querySelectorAll(".nav-item");
+  const screens = document.querySelectorAll(".screen");
+  const fab = document.getElementById("fab-add");
+
+  function setActiveTab(tabId) {
+    navItems.forEach((b) => b.classList.toggle("active", b.dataset.tab === tabId));
+    screens.forEach((s) => s.classList.toggle("active", s.id === `panel-${tabId}`));
+    fab.classList.toggle("hidden", tabId === "sprzet");
+    fab.dataset.forTab = tabId;
+    if (tabId === "sprzet") renderGear();
+  }
+  navItems.forEach((btn) => btn.addEventListener("click", () => setActiveTab(btn.dataset.tab)));
+
+  // ---------------- Sheets ----------------
+  const overlay = document.getElementById("sheet-overlay");
+  function openSheet(id) {
+    document.getElementById(id).classList.add("show");
+    overlay.classList.add("show");
+  }
+  function closeSheet(id) {
+    document.getElementById(id).classList.remove("show");
+    if (!document.querySelector(".sheet.show")) overlay.classList.remove("show");
+  }
+  function closeAllSheets() {
+    document.querySelectorAll(".sheet.show").forEach((s) => s.classList.remove("show"));
+    overlay.classList.remove("show");
+  }
+  document.querySelectorAll("[data-close-sheet]").forEach((btn) => {
+    btn.addEventListener("click", () => closeSheet(btn.dataset.closeSheet));
+  });
+  overlay.addEventListener("click", closeAllSheets);
+
+  fab.addEventListener("click", () => {
+    const tab = fab.dataset.forTab || "geo";
+    if (tab === "bezpieczenstwo") openSheet("sheet-contact");
+    else openSheet("sheet-stage");
   });
 
-  // ---------------- Tabs ----------------
-  const tabBtns = document.querySelectorAll(".tab-btn");
-  const panels = document.querySelectorAll(".panel");
-  tabBtns.forEach((btn) => {
+  // ---------------- Language sheet ----------------
+  document.getElementById("btn-lang-open").addEventListener("click", () => openSheet("sheet-lang"));
+  document.querySelectorAll(".lang-option").forEach((btn) => {
     btn.addEventListener("click", () => {
-      tabBtns.forEach((b) => b.classList.remove("active"));
-      panels.forEach((p) => p.classList.remove("active"));
-      btn.classList.add("active");
-      document.getElementById(`panel-${btn.dataset.tab}`).classList.add("active");
-      if (btn.dataset.tab === "sprzet") renderGear();
+      state.lang = btn.dataset.lang;
+      save();
+      applyI18n();
+      renderSegmentInputs();
+      renderStages();
+      renderGear();
+      renderContacts();
+      updateReminderUI();
+      closeSheet("sheet-lang");
     });
   });
 
-  // ---------------- Geografia + Pogoda: tempo ----------------
-  const stageBody = document.getElementById("stage-body");
+  // ---------------- Geografia: tempo ----------------
+  const stageList = document.getElementById("stage-list");
   const emptyStages = document.getElementById("empty-stages");
   const segmentsContainer = document.getElementById("segments-container");
   const segmentsHint = document.getElementById("segments-hint");
@@ -104,10 +136,7 @@
     }
     return ranges;
   }
-
-  function defaultSegment() {
-    return { nawierzchnia: "Asfalt", temp: 20, wiatr: "brak", opady: "brak" };
-  }
+  function defaultSegment() { return { nawierzchnia: "Asfalt", temp: 20, wiatr: "brak", opady: "brak" }; }
 
   function renderSegmentInputs() {
     const dystans = parseFloat(document.getElementById("f-dystans").value);
@@ -169,7 +198,6 @@
       });
     });
   }
-
   document.getElementById("f-dystans").addEventListener("input", renderSegmentInputs);
 
   function segmentDays(seg, length, basePace, elevFraction) {
@@ -180,14 +208,11 @@
     const effectivePace = basePace * Math.max(0.15, 1 + modSurface + modTemp + modWind + modPrecip + elevFraction);
     return length / effectivePace;
   }
-
   function computeStageDays(stage) {
     const basePace = state.basePace || 110;
     const elevPenaltyKm = -1 * Math.floor(stage.przewyzszenie / 500) * 10;
     const elevFraction = elevPenaltyKm / basePace;
-    return stage.segments.reduce(
-      (sum, seg) => sum + segmentDays(seg, seg.to - seg.from, basePace, elevFraction), 0
-    );
+    return stage.segments.reduce((sum, seg) => sum + segmentDays(seg, seg.to - seg.from, basePace, elevFraction), 0);
   }
 
   const WIND_LABEL_KEY = { brak: "geo.windNone", umiarkowany: "geo.windModerate", silny: "geo.windStrong" };
@@ -195,62 +220,61 @@
   const SURFACE_LABEL_KEY = { "Asfalt": "geo.surfaceAsphalt", "Gravel": "geo.surfaceGravel", "Szuter techniczny": "geo.surfaceTechnical" };
 
   function renderStages() {
-    stageBody.innerHTML = "";
-    emptyStages.style.display = state.stages.length ? "none" : "block";
+    stageList.innerHTML = "";
+    emptyStages.classList.toggle("show", state.stages.length === 0);
     const basePace = state.basePace || 110;
     state.stages.forEach((s, i) => {
       const days = computeStageDays(s);
       const elevPenaltyKm = -1 * Math.floor(s.przewyzszenie / 500) * 10;
       const elevFraction = elevPenaltyKm / basePace;
-      const tr = document.createElement("tr");
-      tr.innerHTML = `
-        <td>${i + 1}</td>
-        <td>${escapeHtml(s.start || "—")} → ${escapeHtml(s.cel || "—")}</td>
-        <td class="num">${s.dystans.toFixed(0)} km</td>
-        <td><button class="expand-btn" data-idx="${i}">${s.segments.length} ${t("geo.segDetails")}</button></td>
-        <td class="num">${days.toFixed(1)} ${t("geo.days")}</td>
-        <td class="del-cell"><button class="del-btn" data-idx="${i}" aria-label="delete">×</button></td>
+
+      const card = document.createElement("div");
+      card.className = "stage-card";
+      card.innerHTML = `
+        <div class="stage-card-main">
+          <div class="stage-day-badge">${i + 1}</div>
+          <div class="stage-route">
+            <div class="route-line">${escapeHtml(s.start || "—")} → ${escapeHtml(s.cel || "—")}</div>
+            <div class="route-sub">${s.dystans.toFixed(0)} km · ${s.segments.length} odc.</div>
+          </div>
+          <div class="stage-days">${days.toFixed(1)}<span class="unit">${t("geo.days")}</span></div>
+          <button class="stage-del" data-idx="${i}" aria-label="delete">×</button>
+        </div>
+        <div class="stage-detail">
+          <div class="segment-summary">
+            ${s.segments.map((seg) => {
+              const d = segmentDays(seg, seg.to - seg.from, basePace, elevFraction);
+              return `<div><span class="seg-tag">${seg.from}-${seg.to.toFixed(0)}km</span>${t(SURFACE_LABEL_KEY[seg.nawierzchnia])}, ${seg.temp}°C, ${t(WIND_LABEL_KEY[seg.wiatr])}, ${t(PRECIP_LABEL_KEY[seg.opady])} — ${d.toFixed(2)} ${t("geo.days")}</div>`;
+            }).join("")}
+          </div>
+        </div>
       `;
-      stageBody.appendChild(tr);
-
-      const detailTr = document.createElement("tr");
-      detailTr.className = "stage-detail-row";
-      detailTr.style.display = "none";
-      detailTr.innerHTML = `<td colspan="6"><div class="segment-summary">${s.segments.map((seg) => {
-        const d = segmentDays(seg, seg.to - seg.from, basePace, elevFraction);
-        return `<span><span class="seg-tag">${seg.from}-${seg.to.toFixed(0)}km</span> ${t(SURFACE_LABEL_KEY[seg.nawierzchnia])}, ${seg.temp}°C, ${t(WIND_LABEL_KEY[seg.wiatr])}, ${t(PRECIP_LABEL_KEY[seg.opady])} — ${d.toFixed(2)} ${t("geo.days")}</span>`;
-      }).join("")}</div></td>`;
-      stageBody.appendChild(detailTr);
-
-      tr.querySelector(".expand-btn").addEventListener("click", () => {
-        detailTr.style.display = detailTr.style.display === "none" ? "table-row" : "none";
+      const main = card.querySelector(".stage-card-main");
+      const detail = card.querySelector(".stage-detail");
+      main.addEventListener("click", (e) => {
+        if (e.target.closest(".stage-del")) return;
+        detail.classList.toggle("open");
       });
-    });
-    stageBody.querySelectorAll(".del-btn").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        state.stages.splice(Number(btn.dataset.idx), 1);
+      card.querySelector(".stage-del").addEventListener("click", (e) => {
+        e.stopPropagation();
+        state.stages.splice(i, 1);
         save(); renderStages(); renderGear();
       });
+      stageList.appendChild(card);
     });
   }
 
   function showFieldError(inputEl) {
     inputEl.style.borderColor = "var(--warn)";
     inputEl.focus();
-    const onInput = () => {
-      inputEl.style.borderColor = "";
-      inputEl.removeEventListener("input", onInput);
-    };
+    const onInput = () => { inputEl.style.borderColor = ""; inputEl.removeEventListener("input", onInput); };
     inputEl.addEventListener("input", onInput);
   }
 
   document.getElementById("btn-add-stage").addEventListener("click", () => {
     const dystansInput = document.getElementById("f-dystans");
     const dystans = parseFloat(dystansInput.value);
-    if (!dystans || dystans <= 0) {
-      showFieldError(dystansInput);
-      return;
-    }
+    if (!dystans || dystans <= 0) { showFieldError(dystansInput); return; }
     const ranges = segmentRanges(dystans);
     const segments = ranges.map((r, i) => {
       const d = draftSegments[i] || defaultSegment();
@@ -263,19 +287,17 @@
       przewyzszenie: parseFloat(document.getElementById("f-przewyzszenie").value) || 0,
       segments,
     });
-    save(); renderStages(); renderGear();
+    save(); renderStages();
     ["f-start", "f-cel", "f-dystans", "f-przewyzszenie"].forEach((id) => {
       document.getElementById(id).value = id === "f-przewyzszenie" ? 0 : "";
     });
     draftSegments = [];
     renderSegmentInputs();
-    document.getElementById("f-start").focus();
+    closeSheet("sheet-stage");
   });
 
-  // ---------------- Sprzęt ----------------
-  function renderChecklistGroup(container, ids, prefix) {
-    const ul = document.createElement("ul");
-    ul.className = "checklist";
+  // ---------------- Sprzęt (accordion) ----------------
+  function renderChecklistItems(ul, ids) {
     ids.forEach((id) => {
       const checked = !!state.checklist[id];
       const li = document.createElement("li");
@@ -288,25 +310,50 @@
       cb.addEventListener("change", () => {
         state.checklist[id] = cb.checked;
         save();
+        updateCategoryProgress(ul.closest(".gear-category"));
       });
       ul.appendChild(li);
     });
-    container.appendChild(ul);
+  }
+
+  function updateCategoryProgress(catEl) {
+    if (!catEl) return;
+    const ids = JSON.parse(catEl.dataset.ids);
+    const checkedCount = ids.filter((id) => state.checklist[id]).length;
+    catEl.querySelector(".cat-progress").textContent = `${checkedCount}/${ids.length}`;
+  }
+
+  function makeAccordionCategory(key, ids, conditional, catId) {
+    const wrap = document.createElement("div");
+    wrap.className = "gear-category" + (conditional ? " conditional" : "");
+    wrap.dataset.ids = JSON.stringify(ids);
+    const isOpen = !!state.gearOpen[catId];
+    if (isOpen) wrap.classList.add("open");
+    wrap.innerHTML = `
+      <div class="gear-category-header">
+        <span class="cat-name">${t(`gear.cat.${key}`)}</span>
+        <span class="cat-progress">0/${ids.length}</span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+      <div class="gear-category-body"><ul class="checklist"></ul></div>
+    `;
+    wrap.querySelector(".gear-category-header").addEventListener("click", () => {
+      wrap.classList.toggle("open");
+      state.gearOpen[catId] = wrap.classList.contains("open");
+      save();
+    });
+    renderChecklistItems(wrap.querySelector(".checklist"), ids);
+    updateCategoryProgress(wrap);
+    return wrap;
   }
 
   function renderGear() {
     const commonContainer = document.getElementById("gear-common");
     commonContainer.innerHTML = "";
     GEAR_CATEGORY_ORDER.forEach((cat) => {
-      const wrap = document.createElement("div");
-      wrap.className = "gear-category";
-      const ids = GEAR_COMMON[cat];
-      wrap.innerHTML = `<h4 class="gear-category-title">${t(`gear.cat.${cat}`)} <span class="count">${ids.length}</span></h4>`;
-      commonContainer.appendChild(wrap);
-      renderChecklistGroup(wrap, ids, cat);
+      commonContainer.appendChild(makeAccordionCategory(cat, GEAR_COMMON[cat], false, "common-" + cat));
     });
 
-    // Aggregate weather conditions across all stages
     let hasHot = false, hasCold = false, hasRain = false, hasWind = false, hasTechnical = false;
     state.stages.forEach((s) => {
       s.segments.forEach((seg) => {
@@ -317,50 +364,17 @@
         if (seg.nawierzchnia === "Gravel" || seg.nawierzchnia === "Szuter techniczny") hasTechnical = true;
       });
     });
-
     const flags = { hot: hasHot, cold: hasCold, rain: hasRain, wind: hasWind, technical: hasTechnical };
     const recommendedContainer = document.getElementById("gear-recommended");
-    const emptyNote = document.getElementById("gear-recommended-empty");
     recommendedContainer.innerHTML = "";
-
-    const anyTriggered = GEAR_CONDITIONAL_ORDER.some((k) => flags[k]);
-    if (state.stages.length === 0) {
-      emptyNote.style.display = "block";
-    } else if (!anyTriggered) {
-      emptyNote.style.display = "block";
-    } else {
-      emptyNote.style.display = "none";
-      GEAR_CONDITIONAL_ORDER.forEach((cat) => {
-        if (!flags[cat]) return;
-        const wrap = document.createElement("div");
-        wrap.className = "gear-category conditional";
-        const ids = GEAR_CONDITIONAL[cat];
-        wrap.innerHTML = `<h4 class="gear-category-title">${t(`gear.cat.${cat}`)}</h4>`;
-        recommendedContainer.appendChild(wrap);
-        renderChecklistGroup(wrap, ids, cat);
-      });
-    }
+    GEAR_CONDITIONAL_ORDER.forEach((cat) => {
+      if (!flags[cat]) return;
+      recommendedContainer.appendChild(makeAccordionCategory(cat, GEAR_CONDITIONAL[cat], true, "cond-" + cat));
+    });
   }
 
   // ---------------- Bezpieczeństwo ----------------
-  if (!Array.isArray(state.safety.contacts)) {
-    state.safety.contacts = [];
-    // migrate legacy single-contact shape if present
-    if (state.safety.contact) {
-      state.safety.contacts.push({
-        id: "c" + Date.now(),
-        method: state.safety.method || "email",
-        value: state.safety.contact,
-      });
-    }
-  }
-
-  const cMethod = document.getElementById("c-method");
-  const cValue = document.getElementById("c-value");
-  const btnAddContact = document.getElementById("btn-add-contact");
-  const contactsBody = document.getElementById("contacts-body");
-  const contactsWrap = document.getElementById("contacts-wrap");
-  const contactsCountEl = document.getElementById("contacts-count");
+  const contactList = document.getElementById("contact-list");
   const noContactsEl = document.getElementById("no-contacts");
   const sFrequency = document.getElementById("s-frequency");
   const remindersStatus = document.getElementById("reminders-status");
@@ -371,69 +385,56 @@
   const messagePreviewText = document.getElementById("message-preview-text");
   const btnCopyMessage = document.getElementById("btn-copy-message");
 
+  sFrequency.value = state.safety.frequency || "none";
+  sFrequency.addEventListener("change", () => { state.safety.frequency = sFrequency.value; save(); });
+
   btnCopyMessage.addEventListener("click", async () => {
     try {
       await navigator.clipboard.writeText(messagePreviewText.textContent);
       const original = btnCopyMessage.textContent;
       btnCopyMessage.textContent = t("safety.copied");
       setTimeout(() => { btnCopyMessage.textContent = original; }, 1500);
-    } catch (e) { /* clipboard unavailable — user can still select the text manually */ }
+    } catch (e) { /* clipboard unavailable */ }
   });
 
-  sFrequency.value = state.safety.frequency || "none";
-  sFrequency.addEventListener("change", () => { state.safety.frequency = sFrequency.value; save(); });
-
   function renderContacts() {
-    contactsBody.innerHTML = "";
+    contactList.innerHTML = "";
     const list = state.safety.contacts;
-    contactsCountEl.firstChild.textContent = `${list.length} `;
-    if (list.length === 0) {
-      contactsWrap.style.display = "none";
-      noContactsEl.style.display = "block";
-      return;
-    }
-    contactsWrap.style.display = "block";
-    noContactsEl.style.display = "none";
+    noContactsEl.classList.toggle("show", list.length === 0);
     list.forEach((c, i) => {
-      const tr = document.createElement("tr");
-      tr.innerHTML = `
-        <td style="width:90px;"><span class="contact-method-badge ${c.method === "sms" ? "sms" : ""}">${c.method === "sms" ? t("safety.methodSms") : t("safety.methodEmail")}</span></td>
-        <td>${escapeHtml(c.value)}</td>
-        <td class="del-cell"><button class="del-btn" data-idx="${i}" aria-label="${t("safety.deleteContact")}">×</button></td>
+      const card = document.createElement("div");
+      card.className = "contact-card";
+      const icon = c.method === "sms"
+        ? `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="17" height="17"><path d="M21 15a2 2 0 0 1-2 2H8l-4 4V5a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2z"/></svg>`
+        : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="17" height="17"><path d="M4 5h16v14H4z"/><path d="M4 6l8 7 8-7"/></svg>`;
+      card.innerHTML = `
+        <div class="contact-method-icon ${c.method === "sms" ? "sms" : ""}">${icon}</div>
+        <div class="contact-value">${escapeHtml(c.value)}</div>
+        <button class="contact-del" data-idx="${i}" aria-label="delete">×</button>
       `;
-      contactsBody.appendChild(tr);
-    });
-    contactsBody.querySelectorAll(".del-btn").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        state.safety.contacts.splice(Number(btn.dataset.idx), 1);
+      card.querySelector(".contact-del").addEventListener("click", () => {
+        state.safety.contacts.splice(i, 1);
         save(); renderContacts();
       });
+      contactList.appendChild(card);
     });
   }
 
-  function addContact(method, value) {
-    const v = value.trim();
-    if (!v) return false;
-    state.safety.contacts.push({ id: "c" + Date.now() + Math.random().toString(36).slice(2, 7), method, value: v });
-    return true;
-  }
-
-  btnAddContact.addEventListener("click", () => {
+  document.getElementById("btn-add-contact").addEventListener("click", () => {
+    const cValue = document.getElementById("c-value");
+    const cMethod = document.getElementById("c-method");
     const v = cValue.value.trim();
     if (!v) { showFieldError(cValue); return; }
-    addContact(cMethod.value, v);
+    state.safety.contacts.push({ id: "c" + Date.now() + Math.random().toString(36).slice(2, 7), method: cMethod.value, value: v });
     save(); renderContacts();
     cValue.value = "";
-    cValue.focus();
+    closeSheet("sheet-contact");
   });
 
   const FREQ_MS = { "1h": 3600000, "3h": 10800000, "6h": 21600000, "daily": 86400000 };
   let reminderTimer = null;
 
-  function showFeedback(msg) {
-    safetyFeedback.textContent = msg;
-    safetyFeedback.style.display = "block";
-  }
+  function showFeedback(msg) { safetyFeedback.textContent = msg; safetyFeedback.style.display = "block"; }
 
   function updateReminderUI() {
     if (state.safety.remindersEnabled && state.safety.frequency !== "none") {
@@ -444,7 +445,6 @@
       btnEnableReminders.textContent = t("safety.enableReminders");
     }
   }
-
   function startReminderLoop() {
     if (reminderTimer) clearInterval(reminderTimer);
     const ms = FREQ_MS[state.safety.frequency];
@@ -455,13 +455,8 @@
       }
     }, ms);
   }
-
   btnEnableReminders.addEventListener("click", async () => {
-    if (state.safety.frequency === "none") {
-      showFeedback(t("safety.frequency"));
-      sFrequency.focus();
-      return;
-    }
+    if (state.safety.frequency === "none") { showFeedback(t("safety.frequency")); return; }
     if (!state.safety.remindersEnabled) {
       if ("Notification" in window) {
         const perm = await Notification.requestPermission();
@@ -480,10 +475,7 @@
     try {
       const controller = new AbortController();
       const timeout = setTimeout(() => controller.abort(), 4000);
-      const res = await fetch(
-        `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=${state.lang}`,
-        { signal: controller.signal }
-      );
+      const res = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=${state.lang}`, { signal: controller.signal });
       clearTimeout(timeout);
       if (!res.ok) return null;
       const data = await res.json();
@@ -491,37 +483,21 @@
     } catch (e) { return null; }
   }
 
-  // Keep generated links well under browser URL-length limits (~2000 chars);
-  // batch recipients so very long contact lists open as a few drafts instead of one broken link.
   const MAX_URL_LEN = 1500;
-
   function chunkRecipients(values, prefixLen) {
-    const chunks = [];
-    let current = [];
-    let currentLen = prefixLen;
+    const chunks = []; let current = []; let currentLen = prefixLen;
     values.forEach((v) => {
       const addLen = v.length + 1;
-      if (current.length && currentLen + addLen > MAX_URL_LEN) {
-        chunks.push(current);
-        current = [];
-        currentLen = prefixLen;
-      }
-      current.push(v);
-      currentLen += addLen;
+      if (current.length && currentLen + addLen > MAX_URL_LEN) { chunks.push(current); current = []; currentLen = prefixLen; }
+      current.push(v); currentLen += addLen;
     });
     if (current.length) chunks.push(current);
     return chunks;
   }
 
   btnSendNow.addEventListener("click", () => {
-    if (state.safety.contacts.length === 0) {
-      showFeedback(t("safety.needContact"));
-      return;
-    }
-    if (!("geolocation" in navigator)) {
-      showFeedback(t("safety.locationError"));
-      return;
-    }
+    if (state.safety.contacts.length === 0) { showFeedback(t("safety.needContact")); return; }
+    if (!("geolocation" in navigator)) { showFeedback(t("safety.locationError")); return; }
     showFeedback(t("safety.locating"));
     navigator.geolocation.getCurrentPosition(async (pos) => {
       const { latitude, longitude } = pos.coords;
@@ -542,21 +518,14 @@
         ...emailChunks.map((chunk) => `mailto:${chunk.map(encodeURIComponent).join(",")}?subject=${subject}&body=${body}`),
         ...smsChunks.map((chunk) => `sms:${chunk.map(encodeURIComponent).join(",")}?body=${body}`),
       ];
-
-      // mailto:/sms: links hand off to the OS's mail/SMS app without actually
-      // navigating the page (like clicking an <a href="mailto:..."> link), so
-      // location.href is the reliable trigger here — window.open() after an
-      // await loses the user-activation context and gets silently popup-blocked.
-      allLinks.forEach((link, i) => {
-        setTimeout(() => { window.location.href = link; }, i * 400);
-      });
+      allLinks.forEach((link, i) => { setTimeout(() => { window.location.href = link; }, i * 400); });
 
       messagePreviewText.textContent = message;
       messagePreview.style.display = "block";
       safetyFeedback.style.display = "none";
-    }, () => {
-      showFeedback(t("safety.locationError"));
-    }, { enableHighAccuracy: true, timeout: 8000 });
+    }, (err) => {
+      showFeedback(`${t("safety.locationError")} (${err.code}: ${err.message})`);
+    }, { enableHighAccuracy: false, timeout: 15000, maximumAge: 60000 });
   });
 
   // ---------------- Init ----------------
@@ -572,13 +541,11 @@
   let deferredPrompt = null;
   const installBanner = document.getElementById("install-banner");
   const installBtn = document.getElementById("btn-install");
-
   window.addEventListener("beforeinstallprompt", (e) => {
     e.preventDefault();
     deferredPrompt = e;
     installBanner.classList.add("show");
   });
-
   installBtn.addEventListener("click", async () => {
     if (!deferredPrompt) return;
     deferredPrompt.prompt();
@@ -586,12 +553,8 @@
     deferredPrompt = null;
     installBanner.classList.remove("show");
   });
+  window.addEventListener("appinstalled", () => { installBanner.classList.remove("show"); });
 
-  window.addEventListener("appinstalled", () => {
-    installBanner.classList.remove("show");
-  });
-
-  // ---------------- Service worker ----------------
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
       navigator.serviceWorker.register("service-worker.js").catch(() => {});

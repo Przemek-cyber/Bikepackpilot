@@ -217,6 +217,19 @@ const I18N = {
     "safety.copied": "Skopiowano!",
 
     "lang.label": "Język",
+
+    "nav.geo": "Geografia",
+    "nav.gear": "Sprzęt",
+    "nav.safety": "Bezpieczeństwo",
+    "sheet.close": "Zamknij",
+    "sheet.newStageTitle": "Nowy etap",
+    "sheet.newContactTitle": "Nowy kontakt",
+    "sheet.langTitle": "Wybierz język",
+    "geo.tempoShort": "Tempo",
+    "geo.kmPerDay": "km/dzień",
+    "gear.commonCount": "z 8 kategorii",
+    "gear.itemsOf": "z",
+    "gear.packed": "spakowane",
   },
 
   en: {
@@ -436,6 +449,19 @@ const I18N = {
     "safety.copied": "Copied!",
 
     "lang.label": "Language",
+
+    "nav.geo": "Geography",
+    "nav.gear": "Gear",
+    "nav.safety": "Safety",
+    "sheet.close": "Close",
+    "sheet.newStageTitle": "New stage",
+    "sheet.newContactTitle": "New contact",
+    "sheet.langTitle": "Choose language",
+    "geo.tempoShort": "Pace",
+    "geo.kmPerDay": "km/day",
+    "gear.commonCount": "of 8 categories",
+    "gear.itemsOf": "of",
+    "gear.packed": "packed",
   },
 
   de: {
@@ -655,6 +681,19 @@ const I18N = {
     "safety.copied": "Kopiert!",
 
     "lang.label": "Sprache",
+
+    "nav.geo": "Geografie",
+    "nav.gear": "Ausrüstung",
+    "nav.safety": "Sicherheit",
+    "sheet.close": "Schließen",
+    "sheet.newStageTitle": "Neue Etappe",
+    "sheet.newContactTitle": "Neuer Kontakt",
+    "sheet.langTitle": "Sprache wählen",
+    "geo.tempoShort": "Tempo",
+    "geo.kmPerDay": "km/Tag",
+    "gear.commonCount": "von 8 Kategorien",
+    "gear.itemsOf": "von",
+    "gear.packed": "gepackt",
   },
 
   es: {
@@ -874,6 +913,19 @@ const I18N = {
     "safety.copied": "¡Copiado!",
 
     "lang.label": "Idioma",
+
+    "nav.geo": "Geografía",
+    "nav.gear": "Equipo",
+    "nav.safety": "Seguridad",
+    "sheet.close": "Cerrar",
+    "sheet.newStageTitle": "Nueva etapa",
+    "sheet.newContactTitle": "Nuevo contacto",
+    "sheet.langTitle": "Elegir idioma",
+    "geo.tempoShort": "Ritmo",
+    "geo.kmPerDay": "km/día",
+    "gear.commonCount": "de 8 categorías",
+    "gear.itemsOf": "de",
+    "gear.packed": "listos",
   },
 };
 
