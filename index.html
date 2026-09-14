@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bikepacking Planner</title>
+<meta name="description" content="Planer tras self-supported bikepacking — geografia, pogoda, sprzęt i bezpieczeństwo.">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#182420">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app">
+
+  <header class="top">
+    <svg class="contour" viewBox="0 0 400 22" preserveAspectRatio="none" fill="none">
+      <path d="M0 18 Q 40 4, 80 16 T 160 14 T 240 17 T 320 12 T 400 16" stroke="#35443C" stroke-width="1"/>
+    </svg>
+    <div class="brand-row">
+      <div class="brand">
+        <svg class="brand-mark" viewBox="0 0 100 100" fill="none">
+          <path d="M12 68 L36 40 L48 54 L62 30 L88 68" stroke="#C97A2B" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="62" cy="30" r="6" fill="#6FA98F"/>
+        </svg>
+        <h1 class="title" data-i18n="app.title">Bikepacking Planner</h1>
+      </div>
+      <select id="lang-switch" class="lang-switch" aria-label="Język">
+        <option value="pl">PL</option>
+        <option value="en">EN</option>
+        <option value="de">DE</option>
+        <option value="es">ES</option>
+      </select>
+    </div>
+    <p class="subtitle" data-i18n="app.subtitle">—</p>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab-btn active" data-tab="geo" data-i18n="tab.geo">Geografia + Pogoda</button>
+    <button class="tab-btn" data-tab="sprzet" data-i18n="tab.gear">Sprzęt</button>
+    <button class="tab-btn" data-tab="bezpieczenstwo" data-i18n="tab.safety">Bezpieczeństwo</button>
+  </nav>
+
+  <!-- ===================== GEOGRAFIA + POGODA ===================== -->
+  <section class="panel active" id="panel-geo">
+    <h2 class="section-title" data-i18n="geo.title">Geografia i pogoda</h2>
+    <p class="section-lede" data-i18n="geo.lede">—</p>
+
+    <h3 class="block-title" data-i18n="geo.paceBlock">Twoje tempo</h3>
+    <div class="field-row" style="grid-template-columns: 220px;">
+      <div>
+        <label for="f-tempo" data-i18n="geo.paceLabel">Tempo bazowe (km/dzień) *</label>
+        <input type="number" id="f-tempo" min="1" step="5" value="110">
+      </div>
+    </div>
+    <p class="note" data-i18n="geo.paceHint">—</p>
+
+    <h3 class="block-title" data-i18n="geo.newStage">Nowy etap</h3>
+    <div class="field-row">
+      <div>
+        <label for="f-start" data-i18n="geo.start">Start</label>
+        <input type="text" id="f-start" data-i18n-ph="geo.startPh" placeholder="np. Miasto A">
+      </div>
+      <div>
+        <label for="f-cel" data-i18n="geo.end">Cel</label>
+        <input type="text" id="f-cel" data-i18n-ph="geo.endPh" placeholder="np. Miasto B">
+      </div>
+      <div>
+        <label for="f-dystans" data-i18n="geo.distance">Dystans trasy (km) *</label>
+        <input type="number" id="f-dystans" min="0" step="1">
+      </div>
+      <div>
+        <label for="f-przewyzszenie" data-i18n="geo.elevation">Przewyższenie (m)</label>
+        <input type="number" id="f-przewyzszenie" min="0" step="10" value="0">
+      </div>
+    </div>
+
+    <div id="segments-container"></div>
+    <p class="note" id="segments-hint" data-i18n="geo.segmentsHint">—</p>
+
+    <div class="btn-row">
+      <button class="btn" id="btn-add-stage" data-i18n="geo.addStage">Dodaj etap</button>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th data-i18n="geo.colDay">Dzień</th><th data-i18n="geo.colRoute">Start → Cel</th>
+            <th class="num" data-i18n="geo.colDistance">Dystans</th>
+            <th data-i18n="geo.colSegments">Odcinki</th>
+            <th class="num" data-i18n="geo.colDays">Szacowane dni</th><th></th>
+          </tr>
+        </thead>
+        <tbody id="stage-body"></tbody>
+      </table>
+    </div>
+    <p class="note" id="empty-stages" data-i18n="geo.emptyStages">—</p>
+  </section>
+
+  <!-- ===================== SPRZĘT ===================== -->
+  <section class="panel" id="panel-sprzet">
+    <h2 class="section-title" data-i18n="gear.title">Sprzęt</h2>
+    <p class="section-lede" data-i18n="gear.lede">—</p>
+
+    <h3 class="block-title" data-i18n="gear.common">Warstwa wspólna</h3>
+    <div id="gear-common"></div>
+
+    <h3 class="block-title" data-i18n="gear.recommended">Zalecane dodatki wg wprowadzonej pogody</h3>
+    <p class="note" id="gear-recommended-empty" data-i18n="gear.recommendedEmpty">—</p>
+    <div id="gear-recommended"></div>
+  </section>
+
+  <!-- ===================== BEZPIECZEŃSTWO ===================== -->
+  <section class="panel" id="panel-bezpieczenstwo">
+    <h2 class="section-title" data-i18n="safety.title">Bezpieczeństwo</h2>
+    <p class="section-lede" data-i18n="safety.lede">—</p>
+
+    <h3 class="block-title" data-i18n="safety.contactsTitle">Kontakty</h3>
+    <div class="field-row" style="grid-template-columns: 140px 1fr auto;">
+      <div>
+        <label for="c-method" data-i18n="safety.contactMethod">Sposób</label>
+        <select id="c-method">
+          <option value="email" data-i18n="safety.methodEmail">E-mail</option>
+          <option value="sms" data-i18n="safety.methodSms">SMS</option>
+        </select>
+      </div>
+      <div>
+        <label for="c-value" data-i18n="safety.contactValueShort">Kontakt</label>
+        <input type="text" id="c-value" data-i18n-ph="safety.contactPh2" placeholder="e-mail albo numer telefonu">
+      </div>
+      <div>
+        <label>&nbsp;</label>
+        <button class="btn" id="btn-add-contact" data-i18n="safety.addContact">Dodaj kontakt</button>
+      </div>
+    </div>
+
+    <p class="note" id="contacts-count">0 <span data-i18n="safety.contactsCount">kontaktów na liście</span></p>
+    <div class="table-wrap" id="contacts-wrap" style="display:none;">
+      <table>
+        <tbody id="contacts-body"></tbody>
+      </table>
+    </div>
+    <p class="note" id="no-contacts" data-i18n="safety.noContacts">—</p>
+
+    <h3 class="block-title" data-i18n="safety.frequency">Częstotliwość przypomnień</h3>
+    <div class="field-row" style="grid-template-columns: 220px;">
+      <div>
+        <select id="s-frequency">
+          <option value="none" data-i18n="safety.freqNone">Wyłączone</option>
+          <option value="1h" data-i18n="safety.freq1h">Co godzinę</option>
+          <option value="3h" data-i18n="safety.freq3h">Co 3 godziny</option>
+          <option value="6h" data-i18n="safety.freq6h">Co 6 godzin</option>
+          <option value="daily" data-i18n="safety.freqDaily">Raz dziennie</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-ghost" id="btn-enable-reminders" data-i18n="safety.enableReminders">Włącz przypomnienia</button>
+      <button class="btn" id="btn-send-now" data-i18n="safety.sendNow">Wyślij teraz</button>
+    </div>
+    <p class="note" id="reminders-status" style="display:none;" data-i18n="safety.remindersOn">—</p>
+    <p class="note" data-i18n="safety.remindersNote">—</p>
+    <p class="note" data-i18n="safety.sendingNote">—</p>
+    <div id="message-preview" style="display:none;">
+      <h3 class="block-title" data-i18n="safety.previewTitle">Treść wiadomości (na wszelki wypadek)</h3>
+      <p class="note" data-i18n="safety.previewHint">—</p>
+      <div class="protocol-box" id="message-preview-text"></div>
+      <div class="btn-row">
+        <button class="btn btn-ghost" id="btn-copy-message" data-i18n="safety.copyMessage">Kopiuj wiadomość</button>
+      </div>
+    </div>
+    <p class="note" id="safety-feedback" style="display:none;"></p>
+  </section>
+
+  <footer class="app-footer" data-i18n="app.footer">
+    Self-Supported Bikepacking Planner — dane zapisują się lokalnie w tej przeglądarce/urządzeniu.
+  </footer>
+</div>
+
+<div class="install-banner" id="install-banner">
+  <p data-i18n="install.text">Dodaj tę aplikację do ekranu głównego, żeby korzystać z niej offline w terenie.</p>
+  <button class="btn" id="btn-install" data-i18n="install.btn">Zainstaluj</button>
+</div>
+
+<script src="i18n.js"></script>
+<script src="gear-data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
