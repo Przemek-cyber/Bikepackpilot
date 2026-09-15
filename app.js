@@ -47,7 +47,7 @@
   // ---------------- License gate (Lemon Squeezy) ----------------
   const LEMONSQUEEZY_PRODUCT_ID = "1363285";
   const LICENSE_STORAGE_KEY = "bikepacking-planner-license";
-  const BUY_URL = "https://bikepackpilot.lemonsqueezy.com/buy/REPLACE-WITH-CHECKOUT-SLUG";
+  const BUY_URL = "https://przemek.lemonsqueezy.com/checkout/buy/a4a0fd2b-fd57-418e-b529-ee37dccca662";
 
   const gateEl = document.getElementById("license-gate");
   const shellEl = document.getElementById("app-shell");
