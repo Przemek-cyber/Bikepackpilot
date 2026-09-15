@@ -63,7 +63,7 @@
   function setActiveTab(tabId) {
     navItems.forEach((b) => b.classList.toggle("active", b.dataset.tab === tabId));
     screens.forEach((s) => s.classList.toggle("active", s.id === `panel-${tabId}`));
-    fab.classList.toggle("hidden", tabId === "sprzet");
+    fab.classList.toggle("hidden", tabId === "sprzet" || tabId === "nearby");
     fab.dataset.forTab = tabId;
     if (tabId === "sprzet") renderGear();
   }
@@ -90,8 +90,8 @@
 
   fab.addEventListener("click", () => {
     const tab = fab.dataset.forTab || "geo";
-    if (tab === "bezpieczenstwo") openSheet("sheet-contact");
-    else openSheet("sheet-stage");
+    if (tab === "bezpieczenstwo") openContactSheet(null);
+    else openStageSheet(null);
   });
 
   // ---------------- Language sheet ----------------
@@ -125,6 +125,7 @@
   });
 
   let draftSegments = [];
+  let editingStageIndex = null;
 
   function segmentRanges(dystans) {
     const count = Math.max(1, Math.ceil(dystans / SEGMENT_LENGTH));
@@ -238,7 +239,12 @@
             <div class="route-sub">${s.dystans.toFixed(0)} km · ${s.segments.length} odc.</div>
           </div>
           <div class="stage-days">${days.toFixed(1)}<span class="unit">${t("geo.days")}</span></div>
-          <button class="stage-del" data-idx="${i}" aria-label="delete">×</button>
+          <div class="card-actions">
+            <button class="stage-edit" data-idx="${i}" aria-label="edit">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
+            </button>
+            <button class="stage-del" data-idx="${i}" aria-label="delete">×</button>
+          </div>
         </div>
         <div class="stage-detail">
           <div class="segment-summary">
@@ -252,8 +258,12 @@
       const main = card.querySelector(".stage-card-main");
       const detail = card.querySelector(".stage-detail");
       main.addEventListener("click", (e) => {
-        if (e.target.closest(".stage-del")) return;
+        if (e.target.closest(".stage-del") || e.target.closest(".stage-edit")) return;
         detail.classList.toggle("open");
+      });
+      card.querySelector(".stage-edit").addEventListener("click", (e) => {
+        e.stopPropagation();
+        openStageSheet(i);
       });
       card.querySelector(".stage-del").addEventListener("click", (e) => {
         e.stopPropagation();
@@ -262,6 +272,32 @@
       });
       stageList.appendChild(card);
     });
+  }
+
+  function openStageSheet(index) {
+    editingStageIndex = index;
+    const titleEl = document.getElementById("sheet-stage-title");
+    const submitBtn = document.getElementById("btn-add-stage");
+    if (index == null) {
+      titleEl.textContent = t("sheet.newStageTitle");
+      submitBtn.textContent = t("geo.addStage");
+      ["f-start", "f-cel", "f-dystans", "f-przewyzszenie"].forEach((id) => {
+        document.getElementById(id).value = id === "f-przewyzszenie" ? 0 : "";
+      });
+      draftSegments = [];
+      renderSegmentInputs();
+    } else {
+      const s = state.stages[index];
+      titleEl.textContent = t("sheet.editStageTitle");
+      submitBtn.textContent = t("geo.saveStage");
+      document.getElementById("f-start").value = s.start || "";
+      document.getElementById("f-cel").value = s.cel || "";
+      document.getElementById("f-dystans").value = s.dystans;
+      document.getElementById("f-przewyzszenie").value = s.przewyzszenie || 0;
+      draftSegments = s.segments.map((seg) => ({ nawierzchnia: seg.nawierzchnia, temp: seg.temp, wiatr: seg.wiatr, opady: seg.opady }));
+      renderSegmentInputs();
+    }
+    openSheet("sheet-stage");
   }
 
   function showFieldError(inputEl) {
@@ -280,14 +316,20 @@
       const d = draftSegments[i] || defaultSegment();
       return { from: r.from, to: r.to, nawierzchnia: d.nawierzchnia, temp: d.temp, wiatr: d.wiatr, opady: d.opady };
     });
-    state.stages.push({
+    const stageData = {
       start: document.getElementById("f-start").value.trim(),
       cel: document.getElementById("f-cel").value.trim(),
       dystans,
       przewyzszenie: parseFloat(document.getElementById("f-przewyzszenie").value) || 0,
       segments,
-    });
-    save(); renderStages();
+    };
+    if (editingStageIndex != null) {
+      state.stages[editingStageIndex] = stageData;
+    } else {
+      state.stages.push(stageData);
+    }
+    save(); renderStages(); renderGear();
+    editingStageIndex = null;
     ["f-start", "f-cel", "f-dystans", "f-przewyzszenie"].forEach((id) => {
       document.getElementById(id).value = id === "f-przewyzszenie" ? 0 : "";
     });
@@ -397,6 +439,8 @@
     } catch (e) { /* clipboard unavailable */ }
   });
 
+  let editingContactIndex = null;
+
   function renderContacts() {
     contactList.innerHTML = "";
     const list = state.safety.contacts;
@@ -410,8 +454,14 @@
       card.innerHTML = `
         <div class="contact-method-icon ${c.method === "sms" ? "sms" : ""}">${icon}</div>
         <div class="contact-value">${escapeHtml(c.value)}</div>
-        <button class="contact-del" data-idx="${i}" aria-label="delete">×</button>
+        <div class="card-actions">
+          <button class="contact-edit" data-idx="${i}" aria-label="edit">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
+          </button>
+          <button class="contact-del" data-idx="${i}" aria-label="delete">×</button>
+        </div>
       `;
+      card.querySelector(".contact-edit").addEventListener("click", () => openContactSheet(i));
       card.querySelector(".contact-del").addEventListener("click", () => {
         state.safety.contacts.splice(i, 1);
         save(); renderContacts();
@@ -420,13 +470,39 @@
     });
   }
 
+  function openContactSheet(index) {
+    editingContactIndex = index;
+    const titleEl = document.getElementById("sheet-contact-title");
+    const submitBtn = document.getElementById("btn-add-contact");
+    const cValue = document.getElementById("c-value");
+    const cMethod = document.getElementById("c-method");
+    if (index == null) {
+      titleEl.textContent = t("sheet.newContactTitle");
+      submitBtn.textContent = t("safety.addContact");
+      cValue.value = "";
+      cMethod.value = "email";
+    } else {
+      const c = state.safety.contacts[index];
+      titleEl.textContent = t("sheet.editContactTitle");
+      submitBtn.textContent = t("safety.saveContact");
+      cValue.value = c.value;
+      cMethod.value = c.method;
+    }
+    openSheet("sheet-contact");
+  }
+
   document.getElementById("btn-add-contact").addEventListener("click", () => {
     const cValue = document.getElementById("c-value");
     const cMethod = document.getElementById("c-method");
     const v = cValue.value.trim();
     if (!v) { showFieldError(cValue); return; }
-    state.safety.contacts.push({ id: "c" + Date.now() + Math.random().toString(36).slice(2, 7), method: cMethod.value, value: v });
+    if (editingContactIndex != null) {
+      state.safety.contacts[editingContactIndex] = { ...state.safety.contacts[editingContactIndex], method: cMethod.value, value: v };
+    } else {
+      state.safety.contacts.push({ id: "c" + Date.now() + Math.random().toString(36).slice(2, 7), method: cMethod.value, value: v });
+    }
     save(); renderContacts();
+    editingContactIndex = null;
     cValue.value = "";
     closeSheet("sheet-contact");
   });
@@ -525,6 +601,129 @@
       safetyFeedback.style.display = "none";
     }, (err) => {
       showFeedback(`${t("safety.locationError")} (${err.code}: ${err.message})`);
+    }, { enableHighAccuracy: false, timeout: 15000, maximumAge: 60000 });
+  });
+
+  // ---------------- W pobliżu (Overpass API / OpenStreetMap) ----------------
+  const nearbyBtn = document.getElementById("btn-nearby-search");
+  const nearbyResults = document.getElementById("nearby-results");
+  const nearbyEmpty = document.getElementById("nearby-empty");
+  const nearbyFeedback = document.getElementById("nearby-feedback");
+  const NEARBY_RADIUS_M = 5000;
+
+  const NEARBY_CATS = [
+    { key: "pharmacy", query: `node["amenity"="pharmacy"](around:${NEARBY_RADIUS_M},{lat},{lon});` },
+    { key: "water", query: `node["amenity"="drinking_water"](around:${NEARBY_RADIUS_M},{lat},{lon});` },
+    { key: "food", query: `node["shop"~"supermarket|convenience|bakery"](around:${NEARBY_RADIUS_M},{lat},{lon});` },
+    { key: "bike", query: `node["shop"="bicycle"](around:${NEARBY_RADIUS_M},{lat},{lon});` },
+    { key: "lodging", query: `node["tourism"~"camp_site|guest_house|hotel|hostel"](around:${NEARBY_RADIUS_M},{lat},{lon});` },
+  ];
+
+  function haversine(lat1, lon1, lat2, lon2) {
+    const R = 6371;
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a = Math.sin(dLat / 2) ** 2 + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon / 2) ** 2;
+    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  }
+
+  function showNearbyFeedback(msg) {
+    nearbyFeedback.textContent = msg;
+    nearbyFeedback.style.display = msg ? "block" : "none";
+  }
+
+  async function fetchNearby(lat, lon) {
+    const query = `[out:json][timeout:20];(${NEARBY_CATS.map((c) => c.query.replace("{lat}", lat).replace("{lon}", lon)).join("")});out body;`;
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 18000);
+    try {
+      const res = await fetch("https://overpass-api.de/api/interpreter", {
+        method: "POST",
+        body: "data=" + encodeURIComponent(query),
+        signal: controller.signal,
+      });
+      clearTimeout(timeout);
+      if (!res.ok) throw new Error("bad response");
+      const data = await res.json();
+      return data.elements || [];
+    } catch (e) {
+      clearTimeout(timeout);
+      throw e;
+    }
+  }
+
+  function classifyElement(el) {
+    const tags = el.tags || {};
+    if (tags.amenity === "pharmacy") return "pharmacy";
+    if (tags.amenity === "drinking_water") return "water";
+    if (["supermarket", "convenience", "bakery"].includes(tags.shop)) return "food";
+    if (tags.shop === "bicycle") return "bike";
+    if (["camp_site", "guest_house", "hotel", "hostel"].includes(tags.tourism)) return "lodging";
+    return null;
+  }
+
+  function renderNearby(elements, userLat, userLon) {
+    nearbyResults.innerHTML = "";
+    const grouped = {};
+    elements.forEach((el) => {
+      const cat = classifyElement(el);
+      if (!cat || el.lat == null || el.lon == null) return;
+      if (!grouped[cat]) grouped[cat] = [];
+      grouped[cat].push(el);
+    });
+
+    const hasAny = NEARBY_CATS.some((c) => grouped[c.key] && grouped[c.key].length);
+    nearbyEmpty.classList.toggle("show", !hasAny);
+    if (!hasAny) { showNearbyFeedback(t("nearby.noResults")); return; }
+    showNearbyFeedback("");
+
+    NEARBY_CATS.forEach((catDef) => {
+      const items = grouped[catDef.key];
+      if (!items || !items.length) return;
+      items.forEach((el) => {
+        el._dist = haversine(userLat, userLon, el.lat, el.lon);
+      });
+      items.sort((a, b) => a._dist - b._dist);
+
+      const section = document.createElement("div");
+      section.className = "nearby-category";
+      section.innerHTML = `<h4 class="nearby-category-title">${t(`nearby.cat.${catDef.key}`)} (${items.length})</h4>`;
+      items.slice(0, 15).forEach((el) => {
+        const name = (el.tags && el.tags.name) || t(`nearby.cat.${catDef.key}`).replace(/y$|i$/, "");
+        const mapsUrl = `https://maps.google.com/?q=${el.lat},${el.lon}`;
+        const card = document.createElement("div");
+        card.className = "nearby-card";
+        card.innerHTML = `
+          <div class="nb-name">${escapeHtml(name)}</div>
+          <div class="nb-dist">${el._dist.toFixed(1)} km</div>
+          <a class="nb-nav" href="${mapsUrl}" target="_blank" rel="noopener">${t("nearby.openMaps")}</a>
+        `;
+        section.appendChild(card);
+      });
+      nearbyResults.appendChild(section);
+    });
+  }
+
+  nearbyBtn.addEventListener("click", () => {
+    if (!("geolocation" in navigator)) { showNearbyFeedback(t("nearby.error")); return; }
+    nearbyEmpty.classList.remove("show");
+    nearbyResults.innerHTML = "";
+    showNearbyFeedback(t("nearby.locating"));
+    nearbyBtn.disabled = true;
+    navigator.geolocation.getCurrentPosition(async (pos) => {
+      const { latitude, longitude } = pos.coords;
+      showNearbyFeedback(t("nearby.searching"));
+      try {
+        const elements = await fetchNearby(latitude, longitude);
+        renderNearby(elements, latitude, longitude);
+      } catch (e) {
+        showNearbyFeedback(t("nearby.error"));
+      } finally {
+        nearbyBtn.disabled = false;
+      }
+    }, () => {
+      showNearbyFeedback(t("nearby.error"));
+      nearbyBtn.disabled = false;
     }, { enableHighAccuracy: false, timeout: 15000, maximumAge: 60000 });
   });
 

@@ -54,8 +54,24 @@
       <div id="gear-common"></div>
     </section>
 
+    <!-- ---- W POBLIŻU ---- -->
+    <section class="screen" id="panel-nearby">
+      <p class="nearby-lede" data-i18n="nearby.lede">—</p>
+      <button class="btn btn-block" id="btn-nearby-search" data-i18n="nearby.searchBtn">Szukaj w pobliżu</button>
+      <p class="note" id="nearby-feedback" style="display:none;"></p>
+      <div id="nearby-results"></div>
+      <div class="empty-state show" id="nearby-empty">
+        <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="32" cy="26" r="9"/><path d="M32 58s16-14 16-28a16 16 0 0 0-32 0c0 14 16 28 16 28z"/></svg>
+        <p data-i18n="nearby.emptyState">—</p>
+      </div>
+    </section>
+
     <!-- ---- BEZPIECZEŃSTWO ---- -->
     <section class="screen" id="panel-bezpieczenstwo">
+      <p class="privacy-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+        <span data-i18n="privacy.badge">—</span>
+      </p>
       <div class="contact-list" id="contact-list"></div>
       <div class="empty-state" id="no-contacts">
         <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="32" cy="24" r="10"/><path d="M12 54c2-12 10-18 20-18s18 6 20 18"/></svg>
@@ -105,6 +121,10 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M8 8V6a4 4 0 0 1 8 0v2M5 8h14l1 13H4z"/></svg>
       <span data-i18n="nav.gear">Sprzęt</span>
     </button>
+    <button class="nav-item" data-tab="nearby">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="10" r="3"/><path d="M12 21s7-6.2 7-11a7 7 0 0 0-14 0c0 4.8 7 11 7 11z"/></svg>
+      <span data-i18n="nav.nearby">W pobliżu</span>
+    </button>
     <button class="nav-item" data-tab="bezpieczenstwo">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3l8 3v6c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V6z"/></svg>
       <span data-i18n="nav.safety">Bezpieczeństwo</span>
@@ -120,7 +140,7 @@
 <div class="sheet" id="sheet-stage">
   <div class="sheet-handle"></div>
   <div class="sheet-header">
-    <h2 data-i18n="sheet.newStageTitle">Nowy etap</h2>
+    <h2 id="sheet-stage-title" data-i18n="sheet.newStageTitle">Nowy etap</h2>
     <button class="icon-btn sheet-close-btn" data-close-sheet="sheet-stage" aria-label="Close">×</button>
   </div>
   <div class="sheet-body">
@@ -157,7 +177,7 @@
 <div class="sheet" id="sheet-contact">
   <div class="sheet-handle"></div>
   <div class="sheet-header">
-    <h2 data-i18n="sheet.newContactTitle">Nowy kontakt</h2>
+    <h2 id="sheet-contact-title" data-i18n="sheet.newContactTitle">Nowy kontakt</h2>
     <button class="icon-btn sheet-close-btn" data-close-sheet="sheet-contact" aria-label="Close">×</button>
   </div>
   <div class="sheet-body">

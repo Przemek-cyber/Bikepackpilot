@@ -461,6 +461,48 @@ input:focus, select:focus, textarea:focus { border-color: var(--accent); }
 
 .freq-select { margin-bottom: 4px; }
 
+/* ---------- Privacy badge ---------- */
+.privacy-badge {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 10px 14px; margin-bottom: 14px;
+  font-size: 11.5px; color: var(--text-muted); line-height: 1.4;
+}
+.privacy-badge svg { width: 18px; height: 18px; color: var(--data); flex-shrink: 0; }
+
+/* ---------- Card edit/del button row ---------- */
+.card-actions { display: flex; align-items: center; gap: 2px; flex-shrink: 0; }
+.stage-edit, .contact-edit {
+  background: none; border: none; color: var(--text-muted);
+  padding: 5px 6px; cursor: pointer; display: flex; align-items: center;
+}
+.stage-edit svg, .contact-edit svg { width: 16px; height: 16px; }
+.stage-edit:active, .contact-edit:active { color: var(--accent); }
+
+.btn-block { width: 100%; display: block; text-align: center; margin-bottom: 12px; }
+
+/* ---------- Nearby ---------- */
+.nearby-lede { font-size: 13px; color: var(--text-muted); margin: 4px 0 14px; }
+
+.nearby-category { margin-bottom: 18px; }
+.nearby-category-title {
+  font-size: 12px; font-weight: 600; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.04em;
+  margin: 0 0 8px;
+}
+.nearby-card {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 12px 14px; margin-bottom: 8px;
+}
+.nearby-card .nb-name { flex: 1; min-width: 0; font-size: 14px; color: var(--text); }
+.nearby-card .nb-dist { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: var(--data); flex-shrink: 0; }
+.nearby-card .nb-nav {
+  flex-shrink: 0; background: var(--accent-soft); color: var(--accent);
+  border: none; border-radius: 999px; padding: 6px 12px; font-size: 11.5px; font-weight: 600;
+  text-decoration: none; cursor: pointer;
+}
+
 .protocol-box {
   background: var(--panel-alt);
   border: 1px solid var(--border);
