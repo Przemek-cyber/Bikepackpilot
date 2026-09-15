@@ -543,6 +543,30 @@ input:focus, select:focus, textarea:focus { border-color: var(--accent); }
 
 ::selection { background: var(--accent-soft); color: var(--text); }
 
+/* ---------- License gate ---------- */
+.license-gate {
+  position: fixed; inset: 0; z-index: 100;
+  background: var(--bg);
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+}
+.license-box {
+  max-width: 380px; width: 100%;
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+}
+.license-box h1 {
+  font-family: 'Fraunces', serif; font-weight: 600; font-size: 22px;
+  color: var(--text); margin: 0 0 8px;
+}
+.license-box p { color: var(--text-muted); font-size: 13.5px; margin: 0 0 20px; line-height: 1.5; }
+.license-box input {
+  width: 100%; text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 13px;
+  margin-bottom: 14px;
+}
+.license-box .btn-block { margin-bottom: 4px; }
+.license-buy { margin-top: 18px !important; font-size: 12.5px !important; }
+.license-buy a { color: var(--accent); text-decoration: none; font-weight: 600; }
+
 @media (min-width: 560px) {
   .app-footer {
     display: block;

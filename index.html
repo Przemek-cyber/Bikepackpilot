@@ -13,7 +13,22 @@
 </head>
 <body>
 
-<div class="app-shell">
+<div class="license-gate" id="license-gate">
+  <div class="license-box">
+    <svg class="brand-mark" viewBox="0 0 100 100" fill="none" style="width:40px;height:40px;margin-bottom:14px;">
+      <path d="M12 68 L36 40 L48 54 L62 30 L88 68" stroke="#C97A2B" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="62" cy="30" r="6" fill="#6FA98F"/>
+    </svg>
+    <h1 data-i18n="license.title">Aktywuj BikepackPilot</h1>
+    <p data-i18n="license.lede">—</p>
+    <input type="text" id="license-input" data-i18n-ph="license.placeholder" placeholder="np. 38b1460a-5104-4067-a91d-77b872934d51" autocomplete="off" autocapitalize="off" spellcheck="false">
+    <button class="btn btn-block" id="btn-activate-license" data-i18n="license.activate">Aktywuj</button>
+    <p class="note" id="license-feedback" style="display:none;"></p>
+    <p class="license-buy"><span data-i18n="license.buyPrompt">—</span> <a href="#" id="license-buy-link" data-i18n="license.buyLink" target="_blank" rel="noopener">Kup dostęp</a></p>
+  </div>
+</div>
+
+<div class="app-shell" id="app-shell" style="display:none;">
 
   <!-- ===================== TOP BAR ===================== -->
   <header class="topbar">

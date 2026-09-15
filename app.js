@@ -44,6 +44,90 @@
     return div.innerHTML;
   }
 
+  // ---------------- License gate (Lemon Squeezy) ----------------
+  const LEMONSQUEEZY_PRODUCT_ID = "1363285";
+  const LICENSE_STORAGE_KEY = "bikepacking-planner-license";
+  const BUY_URL = "https://bikepackpilot.lemonsqueezy.com/buy/REPLACE-WITH-CHECKOUT-SLUG";
+
+  const gateEl = document.getElementById("license-gate");
+  const shellEl = document.getElementById("app-shell");
+  const licenseInput = document.getElementById("license-input");
+  const licenseFeedback = document.getElementById("license-feedback");
+  const btnActivateLicense = document.getElementById("btn-activate-license");
+  const licenseBuyLink = document.getElementById("license-buy-link");
+  if (licenseBuyLink) licenseBuyLink.href = BUY_URL;
+
+  function loadLicense() {
+    try {
+      const raw = localStorage.getItem(LICENSE_STORAGE_KEY);
+      return raw ? JSON.parse(raw) : null;
+    } catch (e) { return null; }
+  }
+  function saveLicense(data) {
+    try { localStorage.setItem(LICENSE_STORAGE_KEY, JSON.stringify(data)); }
+    catch (e) { /* storage unavailable */ }
+  }
+  function unlockApp() {
+    gateEl.style.display = "none";
+    shellEl.style.display = "";
+  }
+  function getDeviceInstanceName() {
+    let name = null;
+    try { name = localStorage.getItem("bikepacking-planner-device-id"); } catch (e) {}
+    if (!name) {
+      name = "device-" + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+      try { localStorage.setItem("bikepacking-planner-device-id", name); } catch (e) {}
+    }
+    return name;
+  }
+  function showLicenseFeedback(msg) {
+    licenseFeedback.textContent = msg;
+    licenseFeedback.style.display = msg ? "block" : "none";
+  }
+
+  async function activateLicenseKey(key) {
+    const instanceName = getDeviceInstanceName();
+    const res = await fetch("https://api.lemonsqueezy.com/v1/licenses/activate", {
+      method: "POST",
+      headers: { "Accept": "application/json", "Content-Type": "application/x-www-form-urlencoded" },
+      body: `license_key=${encodeURIComponent(key)}&instance_name=${encodeURIComponent(instanceName)}`,
+    });
+    const data = await res.json();
+    return data;
+  }
+
+  btnActivateLicense.addEventListener("click", async () => {
+    const key = licenseInput.value.trim();
+    if (!key) { showLicenseFeedback(t("license.noKey")); licenseInput.focus(); return; }
+    showLicenseFeedback(t("license.verifying"));
+    btnActivateLicense.disabled = true;
+    try {
+      const data = await activateLicenseKey(key);
+      if (!data.activated) {
+        showLicenseFeedback(data.error || t("license.invalid"));
+        btnActivateLicense.disabled = false;
+        return;
+      }
+      const productId = data.meta && String(data.meta.product_id);
+      if (productId !== LEMONSQUEEZY_PRODUCT_ID) {
+        showLicenseFeedback(t("license.wrongProduct"));
+        btnActivateLicense.disabled = false;
+        return;
+      }
+      saveLicense({ key, instanceId: data.instance && data.instance.id, activatedAt: Date.now() });
+      unlockApp();
+    } catch (e) {
+      showLicenseFeedback(t("license.networkError"));
+      btnActivateLicense.disabled = false;
+    }
+  });
+
+  // Skip the gate if already activated on this device
+  const existingLicense = loadLicense();
+  if (existingLicense && existingLicense.key) {
+    unlockApp();
+  }
+
   // ---------------- i18n ----------------
   function applyI18n() {
     document.documentElement.lang = state.lang;

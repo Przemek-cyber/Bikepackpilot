@@ -251,6 +251,18 @@ const I18N = {
     "nearby.cat.food": "Sklepy",
     "nearby.cat.bike": "Serwis rowerowy",
     "nearby.cat.lodging": "Noclegi",
+
+    "license.title": "Aktywuj BikepackPilot",
+    "license.lede": "Wpisz kod licencyjny z maila, który dostałeś po zakupie.",
+    "license.placeholder": "np. 38b1460a-5104-4067-a91d-77b872934d51",
+    "license.activate": "Aktywuj",
+    "license.verifying": "Sprawdzam kod...",
+    "license.invalid": "Nieprawidłowy kod. Sprawdź czy skopiowałeś go w całości z maila.",
+    "license.wrongProduct": "Ten kod nie pasuje do tego produktu.",
+    "license.networkError": "Nie udało się połączyć z serwerem weryfikacji. Sprawdź internet i spróbuj ponownie.",
+    "license.noKey": "Wpisz kod licencyjny.",
+    "license.buyPrompt": "Nie masz jeszcze kodu?",
+    "license.buyLink": "Kup dostęp",
   },
 
   en: {
@@ -504,6 +516,18 @@ const I18N = {
     "nearby.cat.food": "Shops",
     "nearby.cat.bike": "Bike repair",
     "nearby.cat.lodging": "Lodging",
+
+    "license.title": "Activate BikepackPilot",
+    "license.lede": "Enter the license key from the email you received after purchase.",
+    "license.placeholder": "e.g. 38b1460a-5104-4067-a91d-77b872934d51",
+    "license.activate": "Activate",
+    "license.verifying": "Checking key...",
+    "license.invalid": "Invalid key. Check that you copied it in full from the email.",
+    "license.wrongProduct": "This key doesn't match this product.",
+    "license.networkError": "Couldn't reach the verification server. Check your internet and try again.",
+    "license.noKey": "Enter a license key.",
+    "license.buyPrompt": "Don't have a key yet?",
+    "license.buyLink": "Buy access",
   },
 
   de: {
@@ -757,6 +781,18 @@ const I18N = {
     "nearby.cat.food": "Geschäfte",
     "nearby.cat.bike": "Fahrradwerkstatt",
     "nearby.cat.lodging": "Unterkünfte",
+
+    "license.title": "BikepackPilot aktivieren",
+    "license.lede": "Gib den Lizenzschlüssel aus der E-Mail ein, die du nach dem Kauf erhalten hast.",
+    "license.placeholder": "z. B. 38b1460a-5104-4067-a91d-77b872934d51",
+    "license.activate": "Aktivieren",
+    "license.verifying": "Schlüssel wird geprüft...",
+    "license.invalid": "Ungültiger Schlüssel. Prüfe, ob du ihn vollständig aus der E-Mail kopiert hast.",
+    "license.wrongProduct": "Dieser Schlüssel passt nicht zu diesem Produkt.",
+    "license.networkError": "Verbindung zum Prüfserver fehlgeschlagen. Prüfe deine Internetverbindung und versuche es erneut.",
+    "license.noKey": "Gib einen Lizenzschlüssel ein.",
+    "license.buyPrompt": "Noch keinen Schlüssel?",
+    "license.buyLink": "Zugang kaufen",
   },
 
   es: {
@@ -1010,6 +1046,18 @@ const I18N = {
     "nearby.cat.food": "Tiendas",
     "nearby.cat.bike": "Taller de bicicletas",
     "nearby.cat.lodging": "Alojamiento",
+
+    "license.title": "Activar BikepackPilot",
+    "license.lede": "Introduce la clave de licencia del correo que recibiste tras la compra.",
+    "license.placeholder": "p. ej. 38b1460a-5104-4067-a91d-77b872934d51",
+    "license.activate": "Activar",
+    "license.verifying": "Comprobando clave...",
+    "license.invalid": "Clave no válida. Comprueba que la copiaste completa desde el correo.",
+    "license.wrongProduct": "Esta clave no corresponde a este producto.",
+    "license.networkError": "No se pudo conectar con el servidor de verificación. Revisa tu conexión e inténtalo de nuevo.",
+    "license.noKey": "Introduce una clave de licencia.",
+    "license.buyPrompt": "¿Aún no tienes una clave?",
+    "license.buyLink": "Comprar acceso",
   },
 };
 
