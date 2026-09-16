@@ -96,8 +96,7 @@
     return data;
   }
 
-  btnActivateLicense.addEventListener("click", async () => {
-    const key = licenseInput.value.trim();
+  async function attemptActivation(key) {
     if (!key) { showLicenseFeedback(t("license.noKey")); licenseInput.focus(); return; }
     showLicenseFeedback(t("license.verifying"));
     btnActivateLicense.disabled = true;
@@ -115,17 +114,33 @@
         return;
       }
       saveLicense({ key, instanceId: data.instance && data.instance.id, activatedAt: Date.now() });
+      // Strip ?license=... from the address bar so the key isn't left visible/bookmarked
+      if (window.history && window.history.replaceState) {
+        const clean = window.location.origin + window.location.pathname;
+        window.history.replaceState({}, "", clean);
+      }
       unlockApp();
     } catch (e) {
       showLicenseFeedback(t("license.networkError"));
       btnActivateLicense.disabled = false;
     }
-  });
+  }
+
+  btnActivateLicense.addEventListener("click", () => attemptActivation(licenseInput.value.trim()));
 
   // Skip the gate if already activated on this device
   const existingLicense = loadLicense();
   if (existingLicense && existingLicense.key) {
     unlockApp();
+  } else {
+    // Auto-activate if a license key arrived via URL (?license=[license_key] from
+    // Lemon Squeezy's post-purchase redirect) — skips manual copy/paste entirely.
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlKey = urlParams.get("license");
+    if (urlKey) {
+      licenseInput.value = urlKey;
+      attemptActivation(urlKey);
+    }
   }
 
   // ---------------- i18n ----------------
