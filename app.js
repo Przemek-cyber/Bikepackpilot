@@ -715,7 +715,8 @@
     { key: "water", query: `node["amenity"="drinking_water"](around:${NEARBY_RADIUS_M},{lat},{lon});` },
     { key: "food", query: `node["shop"~"supermarket|convenience|bakery"](around:${NEARBY_RADIUS_M},{lat},{lon});` },
     { key: "bike", query: `node["shop"="bicycle"](around:${NEARBY_RADIUS_M},{lat},{lon});` },
-    { key: "lodging", query: `node["tourism"~"camp_site|guest_house|hotel|hostel"](around:${NEARBY_RADIUS_M},{lat},{lon});` },
+    { key: "camping", query: `node["tourism"="camp_site"](around:${NEARBY_RADIUS_M},{lat},{lon});` },
+    { key: "lodging", query: `node["tourism"~"guest_house|hotel|hostel"](around:${NEARBY_RADIUS_M},{lat},{lon});` },
   ];
 
   function haversine(lat1, lon1, lat2, lon2) {
@@ -757,7 +758,8 @@
     if (tags.amenity === "drinking_water") return "water";
     if (["supermarket", "convenience", "bakery"].includes(tags.shop)) return "food";
     if (tags.shop === "bicycle") return "bike";
-    if (["camp_site", "guest_house", "hotel", "hostel"].includes(tags.tourism)) return "lodging";
+    if (tags.tourism === "camp_site") return "camping";
+    if (["guest_house", "hotel", "hostel"].includes(tags.tourism)) return "lodging";
     return null;
   }
 

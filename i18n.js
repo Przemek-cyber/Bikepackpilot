@@ -162,6 +162,8 @@ const I18N = {
     "gear.item.hygiene9": "Dezodorant",
     "gear.item.hygiene10": "Krem do rąk / balsam do ust",
     "gear.item.hygiene11": "Grzebień lub mała szczotka do włosów",
+    "gear.item.hygiene12": "Plastry hydrokoloidowe (na pęcherze)",
+    "gear.item.hygiene13": "Maść na odparzenia",
     "gear.item.nav9": "Zapasowe baterie uniwersalne (AA/AAA, do różnych urządzeń)",
     "gear.item.food7": "Owsianka błyskawiczna / płatki zbożowe (śniadanie)",
     "gear.item.food8": "Batony zbożowe/energetyczne (przekąska w trakcie jazdy)",
@@ -238,7 +240,7 @@ const I18N = {
     "privacy.badge": "Dane zostają na Twoim urządzeniu — nic nie wysyłamy na serwer",
 
     "nearby.title": "Punkty w pobliżu",
-    "nearby.lede": "Apteki, sklepy, woda pitna, serwis rowerowy i noclegi w promieniu 5 km od Twojej lokalizacji.",
+    "nearby.lede": "Apteki, sklepy, woda pitna, serwis rowerowy, pola biwakowe i noclegi w promieniu 5 km od Twojej lokalizacji.",
     "nearby.searchBtn": "Szukaj w pobliżu",
     "nearby.searching": "Szukam...",
     "nearby.locating": "Pobieram lokalizację...",
@@ -251,6 +253,7 @@ const I18N = {
     "nearby.cat.food": "Sklepy",
     "nearby.cat.bike": "Serwis rowerowy",
     "nearby.cat.lodging": "Noclegi",
+    "nearby.cat.camping": "Pola biwakowe",
 
     "license.title": "Aktywuj BikepackPilot",
     "license.lede": "Wpisz kod licencyjny z maila, który dostałeś po zakupie.",
@@ -427,6 +430,8 @@ const I18N = {
     "gear.item.hygiene9": "Deodorant",
     "gear.item.hygiene10": "Hand cream / lip balm",
     "gear.item.hygiene11": "Comb or small hairbrush",
+    "gear.item.hygiene12": "Hydrocolloid blister plasters",
+    "gear.item.hygiene13": "Chafing/anti-rash cream",
     "gear.item.nav9": "Spare universal batteries (AA/AAA, for various devices)",
     "gear.item.food7": "Instant oatmeal / cereal (breakfast)",
     "gear.item.food8": "Cereal/energy bars (on-the-bike snack)",
@@ -503,7 +508,7 @@ const I18N = {
     "privacy.badge": "Your data stays on this device — nothing is sent to any server",
 
     "nearby.title": "Nearby points",
-    "nearby.lede": "Pharmacies, shops, drinking water, bike repair and lodging within 5 km of your location.",
+    "nearby.lede": "Pharmacies, shops, drinking water, bike repair, camp sites and lodging within 5 km of your location.",
     "nearby.searchBtn": "Search nearby",
     "nearby.searching": "Searching...",
     "nearby.locating": "Getting location...",
@@ -516,6 +521,7 @@ const I18N = {
     "nearby.cat.food": "Shops",
     "nearby.cat.bike": "Bike repair",
     "nearby.cat.lodging": "Lodging",
+    "nearby.cat.camping": "Camp sites",
 
     "license.title": "Activate BikepackPilot",
     "license.lede": "Enter the license key from the email you received after purchase.",
@@ -692,6 +698,8 @@ const I18N = {
     "gear.item.hygiene9": "Deo",
     "gear.item.hygiene10": "Handcreme / Lippenbalsam",
     "gear.item.hygiene11": "Kamm oder kleine Haarbürste",
+    "gear.item.hygiene12": "Hydrokolloid-Blasenpflaster",
+    "gear.item.hygiene13": "Creme gegen Wundscheuern",
     "gear.item.nav9": "Ersatzbatterien universal (AA/AAA, für verschiedene Geräte)",
     "gear.item.food7": "Instant-Haferflocken / Müsli (Frühstück)",
     "gear.item.food8": "Müsli-/Energieriegel (Snack unterwegs)",
@@ -768,7 +776,7 @@ const I18N = {
     "privacy.badge": "Deine Daten bleiben auf diesem Gerät — nichts wird an einen Server gesendet",
 
     "nearby.title": "Punkte in der Nähe",
-    "nearby.lede": "Apotheken, Geschäfte, Trinkwasser, Fahrradwerkstätten und Unterkünfte im Umkreis von 5 km.",
+    "nearby.lede": "Apotheken, Geschäfte, Trinkwasser, Fahrradwerkstätten, Campingplätze und Unterkünfte im Umkreis von 5 km.",
     "nearby.searchBtn": "In der Nähe suchen",
     "nearby.searching": "Suche läuft...",
     "nearby.locating": "Standort wird ermittelt...",
@@ -781,6 +789,7 @@ const I18N = {
     "nearby.cat.food": "Geschäfte",
     "nearby.cat.bike": "Fahrradwerkstatt",
     "nearby.cat.lodging": "Unterkünfte",
+    "nearby.cat.camping": "Campingplätze",
 
     "license.title": "BikepackPilot aktivieren",
     "license.lede": "Gib den Lizenzschlüssel aus der E-Mail ein, die du nach dem Kauf erhalten hast.",
@@ -957,6 +966,8 @@ const I18N = {
     "gear.item.hygiene9": "Desodorante",
     "gear.item.hygiene10": "Crema de manos / bálsamo labial",
     "gear.item.hygiene11": "Peine o cepillo pequeño",
+    "gear.item.hygiene12": "Apósitos hidrocoloides (para ampollas)",
+    "gear.item.hygiene13": "Crema para rozaduras",
     "gear.item.nav9": "Pilas de repuesto universales (AA/AAA, para varios dispositivos)",
     "gear.item.food7": "Avena instantánea / cereales (desayuno)",
     "gear.item.food8": "Barritas de cereales/energéticas (tentempié en ruta)",
@@ -1033,7 +1044,7 @@ const I18N = {
     "privacy.badge": "Tus datos permanecen en este dispositivo — no se envía nada a ningún servidor",
 
     "nearby.title": "Puntos cercanos",
-    "nearby.lede": "Farmacias, tiendas, agua potable, taller de bicicletas y alojamiento en un radio de 5 km.",
+    "nearby.lede": "Farmacias, tiendas, agua potable, taller de bicicletas, zonas de acampada y alojamiento en un radio de 5 km.",
     "nearby.searchBtn": "Buscar cerca",
     "nearby.searching": "Buscando...",
     "nearby.locating": "Obteniendo ubicación...",
@@ -1046,6 +1057,7 @@ const I18N = {
     "nearby.cat.food": "Tiendas",
     "nearby.cat.bike": "Taller de bicicletas",
     "nearby.cat.lodging": "Alojamiento",
+    "nearby.cat.camping": "Zonas de acampada",
 
     "license.title": "Activar BikepackPilot",
     "license.lede": "Introduce la clave de licencia del correo que recibiste tras la compra.",
