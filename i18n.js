@@ -51,6 +51,7 @@ const I18N = {
     "geo.precipLight": "Lekkie",
     "geo.precipHeavy": "Intensywne",
     "geo.days": "dnia",
+    "geo.segShort": "odc.",
 
     "gear.title": "Sprzęt",
     "gear.lede": "Warstwa wspólna obowiązuje zawsze. Dodatki poniżej dobierają się same na podstawie pogody wpisanej w zakładce Geografia + Pogoda.",
@@ -319,6 +320,7 @@ const I18N = {
     "geo.precipLight": "Light",
     "geo.precipHeavy": "Heavy",
     "geo.days": "day",
+    "geo.segShort": "seg.",
 
     "gear.title": "Gear",
     "gear.lede": "The common layer always applies. The extras below are picked automatically based on the weather entered in the Geography + Weather tab.",
@@ -587,6 +589,7 @@ const I18N = {
     "geo.precipLight": "Leicht",
     "geo.precipHeavy": "Stark",
     "geo.days": "Tag",
+    "geo.segShort": "Abschn.",
 
     "gear.title": "Ausrüstung",
     "gear.lede": "Die Grundausstattung gilt immer. Die Zusätze unten werden automatisch anhand des Wetters aus dem Tab Geografie + Wetter ausgewählt.",
@@ -855,6 +858,7 @@ const I18N = {
     "geo.precipLight": "Ligera",
     "geo.precipHeavy": "Intensa",
     "geo.days": "día",
+    "geo.segShort": "tramos",
 
     "gear.title": "Equipo",
     "gear.lede": "La capa común siempre aplica. Los extras de abajo se eligen automáticamente según el clima introducido en la pestaña Geografía + Clima.",

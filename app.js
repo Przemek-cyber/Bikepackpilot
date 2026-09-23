@@ -335,7 +335,7 @@
           <div class="stage-day-badge">${i + 1}</div>
           <div class="stage-route">
             <div class="route-line">${escapeHtml(s.start || "—")} → ${escapeHtml(s.cel || "—")}</div>
-            <div class="route-sub">${s.dystans.toFixed(0)} km · ${s.segments.length} odc.</div>
+            <div class="route-sub">${s.dystans.toFixed(0)} km · ${s.segments.length} ${t("geo.segShort")}</div>
           </div>
           <div class="stage-days">${days.toFixed(1)}<span class="unit">${t("geo.days")}</span></div>
           <div class="card-actions">
