@@ -47,7 +47,7 @@
   // ---------------- License gate (Lemon Squeezy) ----------------
   const LEMONSQUEEZY_PRODUCT_ID = "1371962";
   const LICENSE_STORAGE_KEY = "bikepacking-planner-license";
-  const BUY_URL = "https://przemek.lemonsqueezy.com/checkout/buy/a4a0fd2b-fd57-418e-b529-ee37dccca662";
+  const BUY_URL = "https://przemek.lemonsqueezy.com/checkout/buy/0c0586a4-a00a-45ca-9407-99d445aee50e";
 
   const gateEl = document.getElementById("license-gate");
   const shellEl = document.getElementById("app-shell");
@@ -108,7 +108,9 @@
         return;
       }
       const productId = data.meta && String(data.meta.product_id);
-      if (productId !== LEMONSQUEEZY_PRODUCT_ID) {
+      const productName = (data.meta && data.meta.product_name) || "";
+      // Accept the original product ID and the live BikepackPilot product (test and live IDs differ)
+      if (productId !== LEMONSQUEEZY_PRODUCT_ID && !/bikepack/i.test(productName)) {
         showLicenseFeedback(t("license.wrongProduct"));
         btnActivateLicense.disabled = false;
         return;
