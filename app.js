@@ -8,8 +8,9 @@
   const WIND_MOD = { "brak": 0, "umiarkowany": -0.2, "silny": -0.3 };
   const PRECIP_MOD = { "brak": 0, "lekkie": -0.1, "intensywne": -0.25 };
 
+  const browserLang = ((navigator.languages && navigator.languages[0]) || navigator.language || "pl").slice(0, 2).toLowerCase();
   const state = load() || {
-    lang: "pl",
+    lang: SUPPORTED_LANGS.includes(browserLang) ? browserLang : "en",
     basePace: 110,
     stages: [],
     checklist: {},
@@ -151,7 +152,7 @@
     document.querySelectorAll("[data-i18n]").forEach((el) => { el.textContent = t(el.dataset.i18n); });
     document.querySelectorAll("[data-i18n-ph]").forEach((el) => { el.setAttribute("placeholder", t(el.dataset.i18nPh)); });
     document.getElementById("lang-current").textContent = state.lang.toUpperCase();
-    document.querySelectorAll(".lang-option").forEach((btn) => {
+    document.querySelectorAll(".lang-option, .gate-lang-btn").forEach((btn) => {
       btn.classList.toggle("active", btn.dataset.lang === state.lang);
     });
   }
@@ -193,6 +194,11 @@
     const tab = fab.dataset.forTab || "geo";
     if (tab === "bezpieczenstwo") openContactSheet(null);
     else openStageSheet(null);
+  });
+
+  // ---------------- Language on the license gate ----------------
+  document.querySelectorAll(".gate-lang-btn").forEach((btn) => {
+    btn.addEventListener("click", () => { state.lang = btn.dataset.lang; save(); applyI18n(); });
   });
 
   // ---------------- Language sheet ----------------

@@ -574,3 +574,11 @@ input:focus, select:focus, textarea:focus { border-color: var(--accent); }
     color: var(--text-muted); font-size: 11px; text-align: center;
   }
 }
+
+.license-box { position: relative; }
+.gate-langs { display: flex; justify-content: center; gap: 6px; margin-bottom: 18px; }
+.gate-lang-btn {
+  background: transparent; color: var(--text-muted); border: 1px solid rgba(255,255,255,.15);
+  border-radius: 8px; padding: 5px 10px; font-size: 12px; font-weight: 700; cursor: pointer; letter-spacing: .04em;
+}
+.gate-lang-btn.active { color: #C97A2B; border-color: #C97A2B; }
