@@ -1,4 +1,4 @@
-const CACHE_NAME = "bikepacking-planner-v9";
+const CACHE_NAME = "bikepacking-planner-v10";
 const ASSETS = [
   "./",
   "./index.html",
@@ -28,6 +28,10 @@ self.addEventListener("activate", (event) => {
 });
 
 self.addEventListener("fetch", (event) => {
+  const url = new URL(event.request.url);
+  // Route-plan pages and SEO files always come from the network (they are updated weekly).
+  if (url.origin === self.location.origin &&
+      (url.pathname.startsWith("/routes") || /\/(sitemap\.xml|robots\.txt|llms\.txt)$/.test(url.pathname))) return;
   event.respondWith(
     caches.match(event.request).then((cached) => {
       if (cached) return cached;

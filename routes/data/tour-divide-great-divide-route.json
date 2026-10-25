@@ -1,0 +1,44 @@
+{
+ "slug": "tour-divide-great-divide-route",
+ "name": "Tour Divide – Great Divide Mountain Bike Route",
+ "short": "Tour Divide",
+ "start": "Banff, Alberta, Canada",
+ "end": "Antelope Wells, New Mexico, USA",
+ "countries": [
+  "Canada",
+  "USA"
+ ],
+ "distance_km": 4425,
+ "distance_note": "about 2,750 miles (≈4,425 km) from Banff to Antelope Wells",
+ "elevation_gain_m": 45600,
+ "surface_mix": {
+  "asphalt": 10,
+  "gravel": 70,
+  "technical": 20
+ },
+ "surface_is_estimate": true,
+ "summary": "The classic North American off-road bikepacking route along the Continental Divide, from the Canadian Rockies to the Mexican border.",
+ "facts": [
+  "The Tour Divide course runs about 2,750 miles from Banff, Alberta to Antelope Wells, New Mexico.",
+  "About 90% of the Great Divide Mountain Bike Route is on unpaved roads and trails.",
+  "Total climbing on the Tour Divide course is around 45,600 m (about 150,000 ft).",
+  "It passes through Alberta, Montana, Wyoming, Colorado and New Mexico.",
+  "The race record is under 14 days – most touring riders take far longer."
+ ],
+ "notes": [
+  "Remote sections with long gaps between services make water and food planning per segment essential.",
+  "Mountain weather changes fast: plan cold, wet segments in the north and hot, dry segments in New Mexico separately.",
+  "With this much climbing, enter elevation per stage – it changes your riding days more than distance does."
+ ],
+ "days_hint": null,
+ "sources": [
+  {
+   "title": "Great Divide Mountain Bike Route – Wikipedia",
+   "url": "https://en.wikipedia.org/wiki/Great_Divide_Mountain_Bike_Route"
+  },
+  {
+   "title": "What is the Tour Divide? – Tailfin",
+   "url": "https://www.tailfin.cc/?p=636218"
+  }
+ ]
+}

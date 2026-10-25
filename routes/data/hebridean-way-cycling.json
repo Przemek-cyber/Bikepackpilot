@@ -1,0 +1,43 @@
+{
+ "slug": "hebridean-way-cycling",
+ "name": "Hebridean Way Cycling Route",
+ "short": "Hebridean Way",
+ "start": "Vatersay, Outer Hebrides",
+ "end": "Butt of Lewis, Outer Hebrides",
+ "countries": [
+  "United Kingdom (Scotland)"
+ ],
+ "distance_km": 297,
+ "distance_note": "185 miles (297 km)",
+ "elevation_gain_m": null,
+ "surface_mix": {
+  "asphalt": 100,
+  "gravel": 0,
+  "technical": 0
+ },
+ "surface_is_estimate": false,
+ "summary": "An island-hopping road route through the Outer Hebrides – 10 islands, six causeways and two ferries, from Vatersay to the Butt of Lewis.",
+ "facts": [
+  "185 miles (297 km) from Vatersay to the Butt of Lewis.",
+  "Crosses 10 islands and six causeways and includes two ferries.",
+  "A waymarked on-road route on mostly quiet roads.",
+  "Most riders go south to north to use the generally prevailing south-westerly winds.",
+  "Usually ridden in two to six days."
+ ],
+ "notes": [
+  "Wind decides your day here more than distance – the plan below shows a calm and a windy scenario.",
+  "Ferry times fix parts of your schedule: plan the ferry days first, then fill the rest.",
+  "Shops and water points are sparse on some islands, so mark them per segment."
+ ],
+ "days_hint": "two to six days",
+ "sources": [
+  {
+   "title": "How to cycle the Hebridean Way – Fiona Outdoors",
+   "url": "https://www.fionaoutdoors.co.uk/2018/06/how-to-cycle-the-hebridean-way"
+  },
+  {
+   "title": "Hebridean Way cycling leaflet – Visit Outer Hebrides",
+   "url": "https://www.visitouterhebrides.co.uk/dbimgs/1608_BB%20Hebridean%20WayCycling%20Leaflet_V2_SCREEN_FINAL(1).pdf"
+  }
+ ]
+}

@@ -1,0 +1,43 @@
+{
+ "slug": "camino-frances-by-bike",
+ "name": "Camino Francés by Bike",
+ "short": "Camino Francés",
+ "start": "Saint-Jean-Pied-de-Port, France",
+ "end": "Santiago de Compostela, Spain",
+ "countries": [
+  "France",
+  "Spain"
+ ],
+ "distance_km": 769,
+ "distance_note": "about 770–780 km",
+ "elevation_gain_m": null,
+ "surface_mix": {
+  "asphalt": 60,
+  "gravel": 35,
+  "technical": 5
+ },
+ "surface_is_estimate": true,
+ "summary": "The most famous Camino de Santiago route, from the French Pyrenees across northern Spain to Santiago de Compostela.",
+ "facts": [
+  "About 769 km from Saint-Jean-Pied-de-Port to Santiago de Compostela.",
+  "Main cities on the way include Pamplona, Logroño, Burgos and León.",
+  "The highest point of the route is about 1,515 m, near Manjarín.",
+  "Starts with a Pyrenees crossing into Spain at Roncesvalles."
+ ],
+ "notes": [
+  "Cyclists can follow the walking path or parallel roads – the surface mix changes your daily distance a lot.",
+  "The Meseta between Burgos and León is exposed: heat and wind matter more than hills there.",
+  "Plan the Pyrenees and the Galician hills as separate, shorter stages."
+ ],
+ "days_hint": null,
+ "sources": [
+  {
+   "title": "French Way – Wikipedia",
+   "url": "https://en.wikipedia.org/wiki/French_Way"
+  },
+  {
+   "title": "Biking the Camino de Santiago – best routes",
+   "url": "https://viajecaminodesantiago.com/en/biking-camino-de-santiago-guide/best-routes-by-bike"
+  }
+ ]
+}

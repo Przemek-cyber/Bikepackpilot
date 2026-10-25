@@ -1,0 +1,48 @@
+{
+ "slug": "eurovelo-9-amber-route",
+ "name": "EuroVelo 9 – The Amber Route",
+ "short": "EuroVelo 9",
+ "start": "Gdańsk, Poland",
+ "end": "Pula, Croatia",
+ "countries": [
+  "Poland",
+  "Czech Republic",
+  "Austria",
+  "Slovenia",
+  "Italy",
+  "Croatia"
+ ],
+ "distance_km": 1930,
+ "distance_note": "about 1,900–1,930 km depending on the source and variant",
+ "elevation_gain_m": null,
+ "surface_mix": {
+  "asphalt": 75,
+  "gravel": 25,
+  "technical": 0
+ },
+ "surface_is_estimate": true,
+ "summary": "A Baltic-to-Adriatic ride through six countries: from Gdańsk along the Vistula, across Poland to Wrocław, through Moravia to Vienna and down through Slovenia to the Istrian coast.",
+ "facts": [
+  "Runs from Gdańsk on the Baltic Sea to Pula on the Adriatic Sea.",
+  "Crosses Poland, the Czech Republic, Austria, Slovenia, Italy and Croatia.",
+  "Main cities on the way include Gdańsk, Poznań, Wrocław, Olomouc, Brno, Vienna, Maribor, Ljubljana and Trieste.",
+  "Terrain changes a lot: flat river valleys in Poland, the hilly Sudetes, the Moravian Karst and the hills of Istria.",
+  "Some sections, especially in Slovenia, Italy and Croatia, may run on busier roads."
+ ],
+ "notes": [
+  "Treat it as several different trips in one: plan Poland, Czechia/Austria and Slovenia/Croatia as separate blocks with their own conditions.",
+  "Expect more climbing from the Sudetes southwards — add elevation per stage instead of using one average.",
+  "Summer heat in Istria changes both your daily distance and your water needs; plan hot segments separately."
+ ],
+ "days_hint": null,
+ "sources": [
+  {
+   "title": "EV9 The Amber Route – Wikipedia",
+   "url": "https://en.wikipedia.org/wiki/EV9_The_Amber_Route"
+  },
+  {
+   "title": "EuroVelo 9 in Poland – EuroVelo",
+   "url": "https://en.eurovelo.com/ev9/poland"
+  }
+ ]
+}

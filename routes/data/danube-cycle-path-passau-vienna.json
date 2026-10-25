@@ -1,0 +1,43 @@
+{
+ "slug": "danube-cycle-path-passau-vienna",
+ "name": "Danube Cycle Path – Passau to Vienna",
+ "short": "Danube Passau–Vienna",
+ "start": "Passau, Germany",
+ "end": "Vienna, Austria",
+ "countries": [
+  "Germany",
+  "Austria"
+ ],
+ "distance_km": 333,
+ "distance_note": "about 320–333 km depending on the variant",
+ "elevation_gain_m": null,
+ "surface_mix": {
+  "asphalt": 95,
+  "gravel": 5,
+  "technical": 0
+ },
+ "surface_is_estimate": true,
+ "summary": "One of Europe's most popular cycle routes: downstream along the Danube through the Upper Danube valley, Linz and the Wachau to Vienna.",
+ "facts": [
+  "Runs about 320–333 km from Passau to Vienna.",
+  "Mostly downhill with the river: from around 300 m above sea level in Passau to 158 m in Vienna.",
+  "Classic 7-stage split: Passau–Schlögen–Linz–Grein–Melk–Krems–Tulln–Vienna.",
+  "The Wachau between Melk and Krems is widely seen as the most beautiful part."
+ ],
+ "notes": [
+  "A great first multi-day trip: the challenge is not the terrain but pacing and accommodation.",
+  "Headwind along the river is the main thing that slows you down – compare the two scenarios below.",
+  "Many people ride it in 6–7 days with sightseeing; at a bikepacking pace it is much shorter."
+ ],
+ "days_hint": "6–7 days on the classic sightseeing itinerary",
+ "sources": [
+  {
+   "title": "Danube Cycle Path Passau–Vienna",
+   "url": "https://donauradweg-passau-wien.at/en/"
+  },
+  {
+   "title": "320 km from Passau to Vienna – BIKE magazin",
+   "url": "https://www.bike-magazin.de/en/tours/europe/320-km-from-passau-to-vienna/"
+  }
+ ]
+}

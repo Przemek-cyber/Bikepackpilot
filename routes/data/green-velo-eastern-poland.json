@@ -1,0 +1,43 @@
+{
+ "slug": "green-velo-eastern-poland",
+ "name": "Green Velo – Eastern Cycling Trail",
+ "short": "Green Velo",
+ "start": "Elbląg, Poland",
+ "end": "Końskie, Poland",
+ "countries": [
+  "Poland"
+ ],
+ "distance_km": 1981,
+ "distance_note": "nearly 2,000 km (the official section lengths add up to about 1,981 km)",
+ "elevation_gain_m": null,
+ "surface_mix": {
+  "asphalt": 70,
+  "gravel": 30,
+  "technical": 0
+ },
+ "surface_is_estimate": true,
+ "summary": "Poland's longest cycling route, running through five eastern voivodeships, three national parks in Podlasie and long stretches of forest and river valleys.",
+ "facts": [
+  "Described by its operator as the longest cycling route in Poland – nearly 2,000 km.",
+  "Starts in Elbląg and ends in Końskie in the Świętokrzyskie region.",
+  "Crosses five voivodeships: Warmińsko-Mazurskie (~420 km), Podlaskie (~592 km), Lubelskie (~351 km), Podkarpackie (~428 km) and Świętokrzyskie (~190 km).",
+  "About 31% of the route runs through protected areas and about 29% through forests.",
+  "Passes the Biebrza, Białowieża and Narew national parks in Podlasie."
+ ],
+ "notes": [
+  "Long forest and protected-area sections mean fewer shops: mark your water and food points per 50 km segment before you go.",
+  "Podkarpackie is the hilliest part – plan shorter days there.",
+  "Many riders split the route into regional blocks; the plan below shows how many riding days the whole trail takes at a steady pace."
+ ],
+ "days_hint": null,
+ "sources": [
+  {
+   "title": "Green Velo – official site",
+   "url": "https://greenvelo.pl/en/70"
+  },
+  {
+   "title": "Green Velo – Interreg Europe good practice",
+   "url": "https://interregeurope.eu/good-practices/east-bicycle-trail-green-velo-and-a-system-of-recommendations-for-cycle-friendly-places"
+  }
+ ]
+}
