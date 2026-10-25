@@ -93,15 +93,15 @@ def head(title: str, desc: str, path: str, extra: str = "") -> str:
 {extra}
 </head>
 <body>
-<header class="top"><a class="brand" href="/routes/">{LOGO}<span>BikepackPilot</span></a>
-<a class="top-cta" href="/">Open the app</a></header>
+<header class="top"><a class="brand" href="/">{LOGO}<span>BikepackPilot</span></a>
+<nav class="topnav"><a href="/routes/">Route plans</a><a class="top-cta" href="/app/">Open the app</a></nav></header>
 <main>
 """
 
 
 FOOT = f"""</main>
 <footer class="foot">
-<p><a href="/routes/">All route plans</a> · <a href="/">BikepackPilot app</a> · <a href="{BUY_URL}" rel="nofollow">Get access</a></p>
+<p><a href="/">BikepackPilot</a> · <a href="/routes/">All route plans</a> · <a href="/app/">Open the app</a> · <a href="{BUY_URL}" rel="nofollow">Get access</a></p>
 <p class="muted">Estimates use BikepackPilot's planning model with the assumptions shown on each page. Route facts come from the linked sources; always check current conditions before you ride.</p>
 </footer>
 </body>
@@ -114,7 +114,7 @@ def cta(route: dict | None = None) -> str:
     return f"""<section class="cta">
 <h2>Plan {what} in minutes</h2>
 <p>Enter your real distance, set surface, heat, wind and rain for each 50 km segment and get realistic riding days – plus a gear list that adapts to your conditions, water and food nearby and a safety check-in. Works offline, in English, Polish, German and Spanish.</p>
-<div class="cta-row"><a class="btn" href="{BUY_URL}" rel="nofollow">Get BikepackPilot</a><a class="btn ghost" href="/">Open the app</a></div>
+<div class="cta-row"><a class="btn" href="{BUY_URL}" rel="nofollow">Get BikepackPilot</a><a class="btn ghost" href="/app/">Already have access? Open the app</a></div>
 </section>"""
 
 
@@ -229,6 +229,49 @@ def hub(routes: list[dict]) -> str:
 """ + FOOT
 
 
+def landing(routes: list[dict]) -> str:
+    title = "BikepackPilot – plan self-supported bikepacking trips in realistic riding days"
+    desc = ("Offline bikepacking planner: split your route into 50 km segments, set surface, heat, wind and rain, "
+            "get realistic riding days, a gear list that adapts to conditions, and water, food and repair nearby.")
+    feats = [
+        ("set-surface-heat-wind-rain.jpg", "Real conditions, segment by segment",
+         "Enter your route distance from a map or GPX. It splits into 50 km segments – set surface, heat, wind and rain for each."),
+        ("realistic-riding-days.jpg", "Riding days you can trust",
+         "BikepackPilot turns those conditions into realistic riding days, not just kilometres – so your plan survives the headwind."),
+        ("gear-adapts-to-conditions.jpg", "A gear list that adapts",
+         "Hot day or rough surface? The packing list changes with the conditions you entered. Plus water, food, bike repair and lodging nearby."),
+    ]
+    feat_html = "".join(f'<div class="feat"><img src="/img/{img}" alt="{esc(h)}" loading="lazy" width="420"><h3>{esc(h)}</h3><p>{esc(t)}</p></div>'
+                        for img, h, t in feats)
+    cards = ""
+    for r in routes[:6]:
+        g = plan(r)["scenarios"]["good"]["days"]
+        cards += (f'<a class="rcard" href="/routes/{r["slug"]}/"><h3>{esc(r["name"])}</h3>'
+                  f'<span class="meta">{r["distance_km"]:,} km · ≈{g:.0f}+ riding days</span></a>')
+    ld = {"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "BikepackPilot",
+          "applicationCategory": "TravelApplication", "operatingSystem": "Web, Android, iOS (installable web app)",
+          "description": desc, "url": SITE + "/", "inLanguage": ["en", "pl", "de", "es"]}
+    extra = (f'<script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>'
+             "<script>(function(){var q=new URLSearchParams(location.search);"
+             "if(q.get('license')||matchMedia('(display-mode: standalone)').matches){location.replace('/app/'+location.search);}"
+             "if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then(function(rs){rs.forEach(function(r){"
+             "if(new URL(r.scope).pathname==='/'){r.update();}});});}})();</script>")
+    return head(title, desc, "/", extra) + f"""
+<section class="hero">
+<h1>Plan your bikepacking trip in realistic riding days</h1>
+<p class="lead">BikepackPilot is an offline planner for self-supported trips. Split your route into 50 km segments, set the conditions you expect, and see how many days it really takes – with a gear list that adapts and water, food and repair nearby.</p>
+<div class="cta-row"><a class="btn" href="{BUY_URL}" rel="nofollow">Get BikepackPilot</a><a class="btn ghost" href="/app/">Already have access? Open the app</a></div>
+<p class="muted small">Works offline · installs like an app · English, Polish, German, Spanish · your data stays on your device</p>
+</section>
+<section class="feats">{feat_html}</section>
+<h2>Route plans</h2>
+<p>How many days does a famous route really take? Plans for well-known routes, built with the same model as the app.</p>
+<div class="grid">{cards}</div>
+<p><a href="/routes/">All route plans →</a></p>
+{cta()}
+""" + FOOT
+
+
 def main() -> None:
     routes = sorted((json.loads(f.read_text()) for f in DATA.glob("*.json")), key=lambda r: r["name"])
     for r in routes:
@@ -236,8 +279,9 @@ def main() -> None:
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(route_page(r, routes), encoding="utf-8")
     (ROOT / "routes" / "index.html").write_text(hub(routes), encoding="utf-8")
+    (ROOT / "index.html").write_text(landing(routes), encoding="utf-8")
     today = dt.date.today().isoformat()
-    urls = [f"{SITE}/", f"{SITE}/routes/"] + [f"{SITE}/routes/{r['slug']}/" for r in routes]
+    urls = [f"{SITE}/", f"{SITE}/routes/"]  # /app/ is the paid app – not indexed + [f"{SITE}/routes/{r['slug']}/" for r in routes]
     (ROOT / "sitemap.xml").write_text(
         '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
         + "".join(f"  <url><loc>{u}</loc><lastmod>{today}</lastmod></url>\n" for u in urls) + "</urlset>\n", encoding="utf-8")

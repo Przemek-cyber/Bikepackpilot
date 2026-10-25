@@ -634,7 +634,7 @@
     if (!ms) return;
     reminderTimer = setInterval(() => {
       if (window.Notification && Notification.permission === "granted") {
-        new Notification(t("app.title"), { body: t("safety.sendNow") + "?", icon: "icons/icon-192.png" });
+        new Notification(t("app.title"), { body: t("safety.sendNow") + "?", icon: "/icons/icon-192.png" });
       }
     }, ms);
   }

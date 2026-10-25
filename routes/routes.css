@@ -48,3 +48,13 @@ summary { cursor: pointer; font-weight: 600; }
 .rcard p { margin: 0 0 10px; font-size: 14.5px; opacity: .88; }
 .rcard .meta { font-size: 13px; color: var(--data); font-weight: 600; }
 .foot { max-width: 860px; margin: 0 auto; padding: 22px 16px 40px; border-top: 1px solid var(--border); font-size: 14px; }
+
+.topnav { display: flex; align-items: center; gap: 14px; font-size: 14px; }
+.topnav a:not(.top-cta) { color: var(--muted); text-decoration: none; }
+.hero { padding: 26px 0 10px; }
+.hero .cta-row { margin: 18px 0 10px; }
+.feats { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; margin: 26px 0; }
+.feat img { width: 100%; height: 300px; object-fit: cover; object-position: top; border-radius: 12px; border: 1px solid var(--border); display: block; }
+.feat h3 { font-family: Fraunces, serif; font-weight: 600; font-size: 19px; margin: 12px 0 4px; }
+.feat p { margin: 0; font-size: 14.5px; opacity: .88; }
+@media (max-width: 480px) { .topnav a:not(.top-cta) { display: none; } }

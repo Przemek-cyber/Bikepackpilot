@@ -1,250 +1,47 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Bikepacking Planner</title>
-<meta name="description" content="Planer tras self-supported bikepacking — geografia, pogoda, sprzęt i bezpieczeństwo.">
-<link rel="manifest" href="manifest.json">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BikepackPilot – plan self-supported bikepacking trips in realistic riding days</title>
+<meta name="description" content="Offline bikepacking planner: split your route into 50 km segments, set surface, heat, wind and rain, get realistic riding days, a gear list that adapts to conditions, and water, food and repair nearby.">
+<link rel="canonical" href="https://bikepackpilot.com/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BikepackPilot – plan self-supported bikepacking trips in realistic riding days">
+<meta property="og:description" content="Offline bikepacking planner: split your route into 50 km segments, set surface, heat, wind and rain, get realistic riding days, a gear list that adapts to conditions, and water, food and repair nearby.">
+<meta property="og:url" content="https://bikepackpilot.com/">
+<meta property="og:image" content="https://bikepackpilot.com/icons/icon-512.png">
 <meta name="theme-color" content="#182420">
-<link rel="apple-touch-icon" href="icons/icon-192.png">
-<link rel="icon" href="icons/icon-192.png">
-<link rel="stylesheet" href="style.css">
+<link rel="icon" href="/icons/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/routes/routes.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "BikepackPilot", "applicationCategory": "TravelApplication", "operatingSystem": "Web, Android, iOS (installable web app)", "description": "Offline bikepacking planner: split your route into 50 km segments, set surface, heat, wind and rain, get realistic riding days, a gear list that adapts to conditions, and water, food and repair nearby.", "url": "https://bikepackpilot.com/", "inLanguage": ["en", "pl", "de", "es"]}</script><script>(function(){var q=new URLSearchParams(location.search);if(q.get('license')||matchMedia('(display-mode: standalone)').matches){location.replace('/app/'+location.search);}if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then(function(rs){rs.forEach(function(r){if(new URL(r.scope).pathname==='/'){r.update();}});});}})();</script>
 </head>
 <body>
+<header class="top"><a class="brand" href="/"><svg class="mark" viewBox="0 0 100 100" fill="none" aria-hidden="true"><path d="M12 68 L36 40 L48 54 L62 30 L88 68" stroke="#C97A2B" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="62" cy="30" r="6" fill="#6FA98F"/></svg><span>BikepackPilot</span></a>
+<nav class="topnav"><a href="/routes/">Route plans</a><a class="top-cta" href="/app/">Open the app</a></nav></header>
+<main>
 
-<div class="license-gate" id="license-gate">
-  <div class="license-box">
-    <div class="gate-langs" role="group" aria-label="Language">
-      <button type="button" class="gate-lang-btn" data-lang="pl">PL</button>
-      <button type="button" class="gate-lang-btn" data-lang="en">EN</button>
-      <button type="button" class="gate-lang-btn" data-lang="de">DE</button>
-      <button type="button" class="gate-lang-btn" data-lang="es">ES</button>
-    </div>
-    <svg class="brand-mark" viewBox="0 0 100 100" fill="none" style="width:40px;height:40px;margin-bottom:14px;">
-      <path d="M12 68 L36 40 L48 54 L62 30 L88 68" stroke="#C97A2B" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
-      <circle cx="62" cy="30" r="6" fill="#6FA98F"/>
-    </svg>
-    <h1 data-i18n="license.title">Aktywuj BikepackPilot</h1>
-    <p data-i18n="license.lede">—</p>
-    <input type="text" id="license-input" data-i18n-ph="license.placeholder" placeholder="np. 38b1460a-5104-4067-a91d-77b872934d51" autocomplete="off" autocapitalize="off" spellcheck="false">
-    <button class="btn btn-block" id="btn-activate-license" data-i18n="license.activate">Aktywuj</button>
-    <p class="note" id="license-feedback" style="display:none;"></p>
-    <p class="license-buy"><span data-i18n="license.buyPrompt">—</span> <a href="#" id="license-buy-link" data-i18n="license.buyLink" target="_blank" rel="noopener">Kup dostęp</a></p>
-    <p class="license-routes"><a href="/routes/">Route plans: Tour Divide, EuroVelo 9, Green Velo, Hebridean Way →</a></p>
-  </div>
-</div>
-
-<div class="app-shell" id="app-shell" style="display:none;">
-
-  <!-- ===================== TOP BAR ===================== -->
-  <header class="topbar">
-    <div class="topbar-brand">
-      <svg class="brand-mark" viewBox="0 0 100 100" fill="none">
-        <path d="M12 68 L36 40 L48 54 L62 30 L88 68" stroke="#C97A2B" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
-        <circle cx="62" cy="30" r="6" fill="#6FA98F"/>
-      </svg>
-      <span class="topbar-title" data-i18n="app.title">Bikepacking Planner</span>
-    </div>
-    <button class="icon-btn" id="btn-lang-open" aria-label="Language">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
-      <span id="lang-current">PL</span>
-    </button>
-  </header>
-
-  <!-- ===================== SCREENS ===================== -->
-  <main class="app-content">
-
-    <!-- ---- GEOGRAFIA ---- -->
-    <section class="screen active" id="panel-geo">
-      <div class="pace-row">
-        <span class="pace-label" data-i18n="geo.tempoShort">Tempo</span>
-        <input type="number" id="f-tempo" min="1" step="5" value="110">
-        <span class="pace-unit" data-i18n="geo.kmPerDay">km/dzień</span>
-      </div>
-
-      <div class="stage-list" id="stage-list"></div>
-      <div class="empty-state" id="empty-stages">
-        <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 50 L26 26 L34 36 L44 18 L54 50"/></svg>
-        <p data-i18n="geo.emptyStages">—</p>
-      </div>
-    </section>
-
-    <!-- ---- SPRZĘT ---- -->
-    <section class="screen" id="panel-sprzet">
-      <div id="gear-recommended"></div>
-      <div id="gear-common"></div>
-    </section>
-
-    <!-- ---- W POBLIŻU ---- -->
-    <section class="screen" id="panel-nearby">
-      <p class="nearby-lede" data-i18n="nearby.lede">—</p>
-      <button class="btn btn-block" id="btn-nearby-search" data-i18n="nearby.searchBtn">Szukaj w pobliżu</button>
-      <p class="note" id="nearby-feedback" style="display:none;"></p>
-      <div id="nearby-results"></div>
-      <div class="empty-state show" id="nearby-empty">
-        <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="32" cy="26" r="9"/><path d="M32 58s16-14 16-28a16 16 0 0 0-32 0c0 14 16 28 16 28z"/></svg>
-        <p data-i18n="nearby.emptyState">—</p>
-      </div>
-    </section>
-
-    <!-- ---- BEZPIECZEŃSTWO ---- -->
-    <section class="screen" id="panel-bezpieczenstwo">
-      <p class="privacy-badge">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
-        <span data-i18n="privacy.badge">—</span>
-      </p>
-      <div class="contact-list" id="contact-list"></div>
-      <div class="empty-state" id="no-contacts">
-        <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="32" cy="24" r="10"/><path d="M12 54c2-12 10-18 20-18s18 6 20 18"/></svg>
-        <p data-i18n="safety.noContacts">—</p>
-      </div>
-
-      <h3 class="block-title" data-i18n="safety.frequency">Częstotliwość przypomnień</h3>
-      <select id="s-frequency" class="freq-select">
-        <option value="none" data-i18n="safety.freqNone">Wyłączone</option>
-        <option value="1h" data-i18n="safety.freq1h">Co godzinę</option>
-        <option value="3h" data-i18n="safety.freq3h">Co 3 godziny</option>
-        <option value="6h" data-i18n="safety.freq6h">Co 6 godzin</option>
-        <option value="daily" data-i18n="safety.freqDaily">Raz dziennie</option>
-      </select>
-
-      <div class="btn-row">
-        <button class="btn btn-ghost" id="btn-enable-reminders" data-i18n="safety.enableReminders">Włącz przypomnienia</button>
-        <button class="btn" id="btn-send-now" data-i18n="safety.sendNow">Wyślij teraz</button>
-      </div>
-      <p class="note" id="reminders-status" style="display:none;" data-i18n="safety.remindersOn">—</p>
-      <p class="note" id="safety-feedback" style="display:none;"></p>
-
-      <div id="message-preview" style="display:none;">
-        <h3 class="block-title" data-i18n="safety.previewTitle">Treść wiadomości (na wszelki wypadek)</h3>
-        <p class="note" data-i18n="safety.previewHint">—</p>
-        <div class="protocol-box" id="message-preview-text"></div>
-        <div class="btn-row">
-          <button class="btn btn-ghost" id="btn-copy-message" data-i18n="safety.copyMessage">Kopiuj wiadomość</button>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- ===================== FAB ===================== -->
-  <button class="fab" id="fab-add" aria-label="Add">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
-  </button>
-
-  <!-- ===================== BOTTOM NAV ===================== -->
-  <nav class="bottom-nav">
-    <button class="nav-item active" data-tab="geo">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 20l6-11 4 6 3-5 5 10z"/></svg>
-      <span data-i18n="nav.geo">Geografia</span>
-    </button>
-    <button class="nav-item" data-tab="sprzet">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M8 8V6a4 4 0 0 1 8 0v2M5 8h14l1 13H4z"/></svg>
-      <span data-i18n="nav.gear">Sprzęt</span>
-    </button>
-    <button class="nav-item" data-tab="nearby">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="10" r="3"/><path d="M12 21s7-6.2 7-11a7 7 0 0 0-14 0c0 4.8 7 11 7 11z"/></svg>
-      <span data-i18n="nav.nearby">W pobliżu</span>
-    </button>
-    <button class="nav-item" data-tab="bezpieczenstwo">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3l8 3v6c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V6z"/></svg>
-      <span data-i18n="nav.safety">Bezpieczeństwo</span>
-    </button>
-  </nav>
-
-  <footer class="app-footer" data-i18n="app.footer">Self-Supported Bikepacking Planner — dane zapisują się lokalnie w tej przeglądarce/urządzeniu.</footer>
-</div>
-
-<!-- ===================== SHEETS (bottom modals) ===================== -->
-<div class="sheet-overlay" id="sheet-overlay"></div>
-
-<div class="sheet" id="sheet-stage">
-  <div class="sheet-handle"></div>
-  <div class="sheet-header">
-    <h2 id="sheet-stage-title" data-i18n="sheet.newStageTitle">Nowy etap</h2>
-    <button class="icon-btn sheet-close-btn" data-close-sheet="sheet-stage" aria-label="Close">×</button>
-  </div>
-  <div class="sheet-body">
-    <div class="field-row">
-      <div>
-        <label for="f-start" data-i18n="geo.start">Start</label>
-        <input type="text" id="f-start" data-i18n-ph="geo.startPh" placeholder="np. Miasto A">
-      </div>
-      <div>
-        <label for="f-cel" data-i18n="geo.end">Cel</label>
-        <input type="text" id="f-cel" data-i18n-ph="geo.endPh" placeholder="np. Miasto B">
-      </div>
-    </div>
-    <div class="field-row">
-      <div>
-        <label for="f-dystans" data-i18n="geo.distance">Dystans trasy (km) *</label>
-        <input type="number" id="f-dystans" min="0" step="1">
-      </div>
-      <div>
-        <label for="f-przewyzszenie" data-i18n="geo.elevation">Przewyższenie (m)</label>
-        <input type="number" id="f-przewyzszenie" min="0" step="10" value="0">
-      </div>
-    </div>
-
-    <div id="segments-container"></div>
-    <p class="note" id="segments-hint" data-i18n="geo.segmentsHint">—</p>
-
-    <div class="btn-row">
-      <button class="btn" id="btn-add-stage" data-i18n="geo.addStage">Dodaj etap</button>
-    </div>
-  </div>
-</div>
-
-<div class="sheet" id="sheet-contact">
-  <div class="sheet-handle"></div>
-  <div class="sheet-header">
-    <h2 id="sheet-contact-title" data-i18n="sheet.newContactTitle">Nowy kontakt</h2>
-    <button class="icon-btn sheet-close-btn" data-close-sheet="sheet-contact" aria-label="Close">×</button>
-  </div>
-  <div class="sheet-body">
-    <div class="field-row" style="grid-template-columns: 120px 1fr;">
-      <div>
-        <label for="c-method" data-i18n="safety.contactMethod">Sposób</label>
-        <select id="c-method">
-          <option value="email" data-i18n="safety.methodEmail">E-mail</option>
-          <option value="sms" data-i18n="safety.methodSms">SMS</option>
-        </select>
-      </div>
-      <div>
-        <label for="c-value" data-i18n="safety.contactValueShort">Kontakt</label>
-        <input type="text" id="c-value" data-i18n-ph="safety.contactPh2" placeholder="e-mail albo numer telefonu">
-      </div>
-    </div>
-    <div class="btn-row">
-      <button class="btn" id="btn-add-contact" data-i18n="safety.addContact">Dodaj kontakt</button>
-    </div>
-  </div>
-</div>
-
-<div class="sheet" id="sheet-lang">
-  <div class="sheet-handle"></div>
-  <div class="sheet-header">
-    <h2 data-i18n="sheet.langTitle">Wybierz język</h2>
-    <button class="icon-btn sheet-close-btn" data-close-sheet="sheet-lang" aria-label="Close">×</button>
-  </div>
-  <div class="sheet-body">
-    <div class="lang-options">
-      <button class="lang-option" data-lang="pl">Polski</button>
-      <button class="lang-option" data-lang="en">English</button>
-      <button class="lang-option" data-lang="de">Deutsch</button>
-      <button class="lang-option" data-lang="es">Español</button>
-    </div>
-  </div>
-</div>
-
-<div class="install-banner" id="install-banner">
-  <p data-i18n="install.text">Dodaj tę aplikację do ekranu głównego, żeby korzystać z niej offline w terenie.</p>
-  <button class="btn" id="btn-install" data-i18n="install.btn">Zainstaluj</button>
-</div>
-
-<script src="i18n.js"></script>
-<script src="gear-data.js"></script>
-<script src="app.js"></script>
+<section class="hero">
+<h1>Plan your bikepacking trip in realistic riding days</h1>
+<p class="lead">BikepackPilot is an offline planner for self-supported trips. Split your route into 50 km segments, set the conditions you expect, and see how many days it really takes – with a gear list that adapts and water, food and repair nearby.</p>
+<div class="cta-row"><a class="btn" href="https://przemek.lemonsqueezy.com/checkout/buy/0c0586a4-a00a-45ca-9407-99d445aee50e" rel="nofollow">Get BikepackPilot</a><a class="btn ghost" href="/app/">Already have access? Open the app</a></div>
+<p class="muted small">Works offline · installs like an app · English, Polish, German, Spanish · your data stays on your device</p>
+</section>
+<section class="feats"><div class="feat"><img src="/img/set-surface-heat-wind-rain.jpg" alt="Real conditions, segment by segment" loading="lazy" width="420"><h3>Real conditions, segment by segment</h3><p>Enter your route distance from a map or GPX. It splits into 50 km segments – set surface, heat, wind and rain for each.</p></div><div class="feat"><img src="/img/realistic-riding-days.jpg" alt="Riding days you can trust" loading="lazy" width="420"><h3>Riding days you can trust</h3><p>BikepackPilot turns those conditions into realistic riding days, not just kilometres – so your plan survives the headwind.</p></div><div class="feat"><img src="/img/gear-adapts-to-conditions.jpg" alt="A gear list that adapts" loading="lazy" width="420"><h3>A gear list that adapts</h3><p>Hot day or rough surface? The packing list changes with the conditions you entered. Plus water, food, bike repair and lodging nearby.</p></div></section>
+<h2>Route plans</h2>
+<p>How many days does a famous route really take? Plans for well-known routes, built with the same model as the app.</p>
+<div class="grid"><a class="rcard" href="/routes/camino-frances-by-bike/"><h3>Camino Francés by Bike</h3><span class="meta">769 km · ≈8+ riding days</span></a><a class="rcard" href="/routes/danube-cycle-path-passau-vienna/"><h3>Danube Cycle Path – Passau to Vienna</h3><span class="meta">333 km · ≈3+ riding days</span></a><a class="rcard" href="/routes/eurovelo-9-amber-route/"><h3>EuroVelo 9 – The Amber Route</h3><span class="meta">1,930 km · ≈18+ riding days</span></a><a class="rcard" href="/routes/green-velo-eastern-poland/"><h3>Green Velo – Eastern Cycling Trail</h3><span class="meta">1,981 km · ≈19+ riding days</span></a><a class="rcard" href="/routes/hebridean-way-cycling/"><h3>Hebridean Way Cycling Route</h3><span class="meta">297 km · ≈3+ riding days</span></a><a class="rcard" href="/routes/tour-divide-great-divide-route/"><h3>Tour Divide – Great Divide Mountain Bike Route</h3><span class="meta">4,425 km · ≈56+ riding days</span></a></div>
+<p><a href="/routes/">All route plans →</a></p>
+<section class="cta">
+<h2>Plan your own route in minutes</h2>
+<p>Enter your real distance, set surface, heat, wind and rain for each 50 km segment and get realistic riding days – plus a gear list that adapts to your conditions, water and food nearby and a safety check-in. Works offline, in English, Polish, German and Spanish.</p>
+<div class="cta-row"><a class="btn" href="https://przemek.lemonsqueezy.com/checkout/buy/0c0586a4-a00a-45ca-9407-99d445aee50e" rel="nofollow">Get BikepackPilot</a><a class="btn ghost" href="/app/">Already have access? Open the app</a></div>
+</section>
+</main>
+<footer class="foot">
+<p><a href="/">BikepackPilot</a> · <a href="/routes/">All route plans</a> · <a href="/app/">Open the app</a> · <a href="https://przemek.lemonsqueezy.com/checkout/buy/0c0586a4-a00a-45ca-9407-99d445aee50e" rel="nofollow">Get access</a></p>
+<p class="muted">Estimates use BikepackPilot's planning model with the assumptions shown on each page. Route facts come from the linked sources; always check current conditions before you ride.</p>
+</footer>
 </body>
 </html>
