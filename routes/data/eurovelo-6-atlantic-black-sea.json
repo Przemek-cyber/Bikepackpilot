@@ -56,5 +56,10 @@
    "title": "EuroVelo 6: The Rivers Route (VeloPlanner)",
    "url": "https://veloplanner.com/routes/eurovelo-6"
   }
- ]
+ ],
+ "osm": {
+  "relations": [
+   2938
+  ]
+ }
 }

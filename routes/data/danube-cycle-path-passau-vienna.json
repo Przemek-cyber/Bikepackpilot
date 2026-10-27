@@ -39,5 +39,16 @@
    "title": "320 km from Passau to Vienna – BIKE magazin",
    "url": "https://www.bike-magazin.de/en/tours/europe/320-km-from-passau-to-vienna/"
   }
- ]
+ ],
+ "osm": {
+  "relations": [
+   2938
+  ],
+  "bbox": [
+   47.95,
+   13.4,
+   48.7,
+   16.45
+  ]
+ }
 }

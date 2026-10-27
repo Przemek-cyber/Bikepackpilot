@@ -44,5 +44,10 @@
    "title": "EuroVelo 9 in Poland – EuroVelo",
    "url": "https://en.eurovelo.com/ev9/poland"
   }
- ]
+ ],
+ "osm": {
+  "relations": [
+   1168027
+  ]
+ }
 }

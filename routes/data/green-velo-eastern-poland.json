@@ -39,5 +39,10 @@
    "title": "Green Velo – Interreg Europe good practice",
    "url": "https://interregeurope.eu/good-practices/east-bicycle-trail-green-velo-and-a-system-of-recommendations-for-cycle-friendly-places"
   }
- ]
+ ],
+ "osm": {
+  "relations": [
+   5141547
+  ]
+ }
 }
