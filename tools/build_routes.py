@@ -281,11 +281,12 @@ def main() -> None:
     (ROOT / "routes" / "index.html").write_text(hub(routes), encoding="utf-8")
     (ROOT / "index.html").write_text(landing(routes), encoding="utf-8")
     today = dt.date.today().isoformat()
-    urls = [f"{SITE}/", f"{SITE}/routes/"]  # /app/ is the paid app – not indexed + [f"{SITE}/routes/{r['slug']}/" for r in routes]
+    # /app/ is the paid app – not indexed
+    urls = [f"{SITE}/", f"{SITE}/routes/"] + [f"{SITE}/routes/{r['slug']}/" for r in routes]
     (ROOT / "sitemap.xml").write_text(
         '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
         + "".join(f"  <url><loc>{u}</loc><lastmod>{today}</lastmod></url>\n" for u in urls) + "</urlset>\n", encoding="utf-8")
-    (ROOT / "robots.txt").write_text(f"User-agent: *\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n", encoding="utf-8")
+    (ROOT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nDisallow: /app/\n\nSitemap: {SITE}/sitemap.xml\n", encoding="utf-8")
     lines = ["# BikepackPilot", "", "> Offline web app for planning self-supported bikepacking trips: splits a route into 50 km segments, "
              "adjusts for surface, heat, wind and rain, calculates realistic riding days, adapts the gear list and finds water, food, repair and lodging nearby.",
              "", "## Route plans", ""] + [f"- [{r['name']}]({SITE}/routes/{r['slug']}/): {r['distance_km']:,} km, {r['start']} → {r['end']}" for r in routes]
