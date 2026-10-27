@@ -1,0 +1,43 @@
+name: Route maps (OSM)
+
+on:
+  workflow_dispatch:
+    inputs:
+      discover:
+        description: "Overpass filters to list candidate relations, separated by ' || ' (empty = build maps)"
+        required: false
+      force:
+        description: "Rebuild existing maps"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency: routes
+
+jobs:
+  osm:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install requests
+      - name: Run
+        env:
+          DISCOVER: ${{ inputs.discover }}
+          FORCE: ${{ inputs.force }}
+        run: |
+          if [ -n "$DISCOVER" ]; then
+            ARGS=(); IFS='|' read -ra parts <<< "${DISCOVER// || /|}"; for p in "${parts[@]}"; do ARGS+=(--discover "$p"); done
+            python tools/osm_geometry.py "${ARGS[@]}"
+          else
+            [ "$FORCE" = "true" ] && F=--force || F=
+            python tools/osm_geometry.py $F && python tools/build_routes.py
+            git config user.name "bikepackpilot-bot"; git config user.email "bikepackpilot-bot@users.noreply.github.com"
+            git add routes sitemap.xml llms.txt index.html
+            git diff --cached --quiet || (git commit -q -m "Route maps" && git pull -q --rebase origin main && git push -q origin HEAD:main)
+          fi
