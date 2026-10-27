@@ -29,7 +29,7 @@ def overpass(q: str) -> dict:
     for attempt in range(3):
         url = ENDPOINTS[attempt % len(ENDPOINTS)]
         try:
-            r = requests.post(url, data={"data": q}, headers=UA, timeout=300)
+            r = requests.post(url, data={"data": q}, headers=UA, timeout=660)
             if r.status_code == 200:
                 return r.json()
             last = f"{r.status_code} {r.text[:200]}"
@@ -56,12 +56,42 @@ def hav(a, b) -> float:
     return 12742 * math.asin(math.sqrt(h))
 
 
+def stitch(lines: list[list[tuple]]) -> list[list[tuple]]:
+    """Join OSM ways that share endpoints into long polylines (fewer lines, fewer points)."""
+    from collections import defaultdict
+    ends = defaultdict(set)
+    for i, l in enumerate(lines):
+        ends[l[0]].add(i)
+        ends[l[-1]].add(i)
+    used = [False] * len(lines)
+    out = []
+
+    def grow(cur: list) -> list:
+        while True:
+            tip = cur[-1]
+            j = next((k for k in ends[tip] if not used[k]), None)
+            if j is None:
+                return cur
+            used[j] = True
+            seg = lines[j] if lines[j][0] == tip else lines[j][::-1]
+            cur.extend(seg[1:])
+
+    for i in range(len(lines)):
+        if used[i]:
+            continue
+        used[i] = True
+        cur = grow(list(lines[i]))
+        cur = grow(cur[::-1])
+        out.append(cur)
+    return out
+
+
 def build(route: dict) -> dict | None:
     osm = route.get("osm") or {}
     ids = osm.get("relations") or []
     if not ids:
         return None
-    q = "[out:json][timeout:280];(" + "".join(f"relation({i});" for i in ids) + ")->.r;(.r;.r>>;)->.all;way.all;out geom;"
+    q = "[out:json][timeout:600];(" + "".join(f"relation({i});" for i in ids) + ")->.r;(.r;.r>>;)->.all;way.all;out geom;"
     res = overpass(q)
     bbox = osm.get("bbox")
     lines, total = [], 0.0
@@ -76,6 +106,7 @@ def build(route: dict) -> dict | None:
         lines.append(pts)
     if not lines:
         raise RuntimeError("no geometry")
+    lines = stitch(lines)
     step = max(0.05, total / 6000)  # ~6000 points max
     simple = []
     for pts in lines:
