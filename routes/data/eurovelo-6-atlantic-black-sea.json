@@ -1,0 +1,60 @@
+{
+ "slug": "eurovelo-6-atlantic-black-sea",
+ "name": "EuroVelo 6 – Atlantic to Black Sea (The Rivers Route)",
+ "short": "EuroVelo 6 Rivers Route",
+ "start": "Nantes / Saint-Brevin-les-Pins, France (Atlantic coast)",
+ "end": "Constanța, Romania (Black Sea)",
+ "countries": [
+  "France",
+  "Switzerland",
+  "Germany",
+  "Austria",
+  "Slovakia",
+  "Hungary",
+  "Croatia",
+  "Serbia",
+  "Bulgaria",
+  "Romania"
+ ],
+ "distance_km": 4700,
+ "distance_note": "about 4,700 km per the official EuroVelo site (Wikipedia lists 3,653 km; other sources say roughly 3,600–4,450 km)",
+ "elevation_gain_m": null,
+ "surface_mix": {
+  "asphalt": 70,
+  "gravel": 25,
+  "technical": 5
+ },
+ "surface_is_estimate": true,
+ "summary": "EuroVelo 6 follows the Loire, a short stretch of the Rhine and nearly the whole Danube from France's Atlantic coast to Romania's Black Sea coast. It is mostly flat, popular, and crosses ten countries.",
+ "facts": [
+  "The official EuroVelo site describes EV6 as 4,700 km long, with 11 UNESCO sites, 6 European rivers and 10 countries.",
+  "The route passes through France, Switzerland, Germany, Austria, Slovakia, Hungary, Croatia, Serbia, Bulgaria and Romania.",
+  "It follows the Loire, a short section of the upper Rhine and almost the entire Danube, with the Saône valley and Rhône–Rhine Canal linking them.",
+  "Distance figures differ by source: Wikipedia gives 3,653 km, while other guides quote about 3,600 km or 4,450 km, depending on start point and route version.",
+  "The western start is variously given as Nantes or Saint-Brevin-les-Pins at the Loire mouth; the route ends at Constanța on the Black Sea."
+ ],
+ "notes": [
+  "Signage is strong in France, Switzerland, Germany and Austria, where EV6 overlaps national routes. In much of Bulgaria and Romania signposts are lacking, so carry GPS navigation for the lower Danube.",
+  "The route is generally described as easy to moderate and mostly flat, following river valleys, so it suits relaxed touring.",
+  "The official download includes sections still under development or at the planning stage, so check your chosen section before you commit, especially in the Balkans."
+ ],
+ "days_hint": null,
+ "sources": [
+  {
+   "title": "EuroVelo 6 – Atlantic–Black Sea (official EuroVelo site)",
+   "url": "https://en.eurovelo.com/ev6"
+  },
+  {
+   "title": "EV6 The Rivers Route (Wikipedia)",
+   "url": "https://en.wikipedia.org/wiki/EV6_The_Rivers_Route"
+  },
+  {
+   "title": "EuroVelo 6 Map: Atlantic to Black Sea Route (VeloPlanner)",
+   "url": "https://veloplanner.com/groups/eurovelo-6-atlantic-black-sea"
+  },
+  {
+   "title": "EuroVelo 6: The Rivers Route (VeloPlanner)",
+   "url": "https://veloplanner.com/routes/eurovelo-6"
+  }
+ ]
+}
