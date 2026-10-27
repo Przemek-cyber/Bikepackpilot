@@ -1,0 +1,76 @@
+{
+ "slug": "eurovelo-10-baltic-sea-poland",
+ "name": "EuroVelo 10 – Baltic Sea Cycle Route (Poland section, Velo Baltica)",
+ "short": "EV10 Poland Baltic Coast",
+ "start": "Świnoujście (German border), Poland",
+ "end": "Gronowo (Kaliningrad border), Poland",
+ "countries": [
+  "Poland"
+ ],
+ "distance_km": 588,
+ "distance_note": "about 588 km including the Hel Peninsula; roughly 520–533 km for the shorter Świnoujście–Elbląg main line",
+ "elevation_gain_m": null,
+ "surface_mix": {
+  "asphalt": 70,
+  "gravel": 25,
+  "technical": 5
+ },
+ "surface_is_estimate": true,
+ "summary": "The Polish leg of EuroVelo 10 follows the Baltic coast from Świnoujście through Kołobrzeg, Ustka, Łeba and Gdańsk to Elbląg and the Kaliningrad border. Mostly flat and seaside, it ranges from new asphalt paths to sandy forest sections.",
+ "facts": [
+  "The Polish section is about 588 km long and crosses the West Pomeranian, Pomeranian and Warmian-Masurian voivodeships (Polish Wikipedia).",
+  "The shorter variant without the Hel Peninsula is about 533 km, and the route runs from Świnoujście near the German border to Elbląg (Traseo).",
+  "In the west it is known as Velo Baltica and shares its course with EuroVelo 13, the Iron Curtain Trail (Wikivoyage; VeloPlanner)."
+ ],
+ "notes": [
+  "Most riders go west to east, starting in Świnoujście (VeloPlanner).",
+  "Expect a mix of surfaces: new asphalt paths and old railway-line cycleways, but also forest tracks and some sandy stretches in Pomorskie. Allow extra time between Łeba and Rowy."
+ ],
+ "days_hint": "8–11 days for about 588 km (Wikivoyage suggestion)",
+ "sources": [
+  {
+   "title": "EuroVelo 10 – Wikivoyage",
+   "url": "https://en.wikivoyage.org/wiki/EuroVelo_10"
+  },
+  {
+   "title": "EuroVelo 10 – Polish Wikipedia",
+   "url": "https://pl.wikipedia.org/wiki/Szlak_rowerowy_R10"
+  },
+  {
+   "title": "Velo Baltica – EuroVelo 10 – R10 official route (Traseo)",
+   "url": "https://www.traseo.pl/trasa/velo-baltica-eurovelo-10-r10-official-route"
+  },
+  {
+   "title": "Cycling the Baltic Sea in Poland – EuroVelo 10 in Pomorskie (Cycling Thread)",
+   "url": "https://www.cyclingthread.com/cycling-baltic-sea-in-poland-eurovelo-10-in-pomorskie"
+  }
+ ],
+ "waypoints": [
+  "Świnoujście, Poland",
+  "Międzyzdroje, Poland",
+  "Dziwnów, Poland",
+  "Rewal, Poland",
+  "Kołobrzeg, Poland",
+  "Mielno, Poland",
+  "Darłowo, Poland",
+  "Ustka, Poland",
+  "Rowy, Poland",
+  "Łeba, Poland",
+  "Władysławowo, Poland",
+  "Puck, Poland",
+  "Gdynia, Poland",
+  "Sopot, Poland",
+  "Gdańsk, Poland",
+  "Nowy Dwór Gdański, Poland",
+  "Elbląg, Poland",
+  "Frombork, Poland",
+  "Braniewo, Poland",
+  "Gronowo, Poland"
+ ],
+ "osm": {
+  "relations": [
+   9566115,
+   9424435
+  ]
+ }
+}

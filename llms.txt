@@ -6,6 +6,7 @@
 
 - [Camino Francés by Bike](https://bikepackpilot.com/routes/camino-frances-by-bike/): 769 km, Saint-Jean-Pied-de-Port, France → Santiago de Compostela, Spain
 - [Danube Cycle Path – Passau to Vienna](https://bikepackpilot.com/routes/danube-cycle-path-passau-vienna/): 333 km, Passau, Germany → Vienna, Austria
+- [EuroVelo 10 – Baltic Sea Cycle Route (Poland section, Velo Baltica)](https://bikepackpilot.com/routes/eurovelo-10-baltic-sea-poland/): 588 km, Świnoujście (German border), Poland → Gronowo (Kaliningrad border), Poland
 - [EuroVelo 6 – Atlantic to Black Sea (The Rivers Route)](https://bikepackpilot.com/routes/eurovelo-6-atlantic-black-sea/): 4,700 km, Nantes / Saint-Brevin-les-Pins, France (Atlantic coast) → Constanța, Romania (Black Sea)
 - [EuroVelo 9 – The Amber Route](https://bikepackpilot.com/routes/eurovelo-9-amber-route/): 1,930 km, Gdańsk, Poland → Pula, Croatia
 - [Green Velo – Eastern Cycling Trail](https://bikepackpilot.com/routes/green-velo-eastern-poland/): 1,981 km, Elbląg, Poland → Końskie, Poland
