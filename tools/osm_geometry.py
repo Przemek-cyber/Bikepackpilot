@@ -156,8 +156,15 @@ def brouter_leg(a: tuple, b: tuple) -> list[tuple] | None:
 def build_from_waypoints(route: dict) -> dict:
     """Approximate line through the route's main towns, routed for bikes; legs that can't be routed
     (ferries, missing roads) are drawn as straight dashed lines."""
-    names = route["waypoints"]
-    pts = [geocode(n) for n in names]
+    names, pts = [], []
+    for n in route["waypoints"]:
+        try:
+            pts.append(geocode(n))
+            names.append(n)
+        except RuntimeError as e:
+            print(f"::warning title=Pominięty punkt::{e}")
+    if len(pts) < 2:
+        raise RuntimeError("too few places found")
     routed, straight, total = [], [], 0.0
     for a, b in zip(pts, pts[1:]):
         leg = brouter_leg(a, b)
