@@ -41,6 +41,8 @@ SCHEMA = {
         "facts": {"type": "array", "items": {"type": "string"}, "description": "3-6 facts, each directly supported by the sources"},
         "notes": {"type": "array", "items": {"type": "string"}, "description": "2-4 practical planning notes (water, food, wind, heat, climbing, ferries) specific to this route; no invented numbers"},
         "days_hint": {"type": ["string", "null"], "description": "Typical duration ONLY if a source states it, else null"},
+        "osm_relations": {"type": "array", "items": {"type": "integer"},
+                          "description": "OpenStreetMap relation id(s) of this route ONLY if you saw them on an openstreetmap.org/relation/<id> link or waymarkedtrails page; else []"},
         "sources": {"type": "array", "items": {"type": "object", "properties": {"title": {"type": "string"}, "url": {"type": "string"}},
                                                "required": ["title", "url"]}, "description": "2-4 sources you actually read; prefer official route sites"},
     },
@@ -148,6 +150,9 @@ def main() -> None:
         try:
             r = verify(research(name))
             validate(r)
+            rel = [int(x) for x in (r.pop("osm_relations", None) or []) if str(x).isdigit()]
+            if rel:
+                r["osm"] = {"relations": rel[:5]}
             (DATA / f"{r['slug']}.json").write_text(json.dumps(r, ensure_ascii=False, indent=1), encoding="utf-8")
             made.append(r["slug"])
             print(f"::notice title=Nowa trasa::{r['name']} · {r['distance_km']} km · /routes/{r['slug']}/")

@@ -45,6 +45,10 @@ jobs:
           CLAUDE_MODEL: ${{ vars.CLAUDE_MODEL }}
           COUNT: ${{ inputs.count || '1' }}
         run: python tools/research_route.py --count "$COUNT"
+      - name: Route maps from OpenStreetMap (new routes only)
+        if: github.event_name != 'push'
+        continue-on-error: true
+        run: python tools/osm_geometry.py
       - name: Build pages
         run: python tools/build_routes.py
       - name: Commit
