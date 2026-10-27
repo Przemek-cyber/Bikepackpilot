@@ -41,6 +41,8 @@ SCHEMA = {
         "facts": {"type": "array", "items": {"type": "string"}, "description": "3-6 facts, each directly supported by the sources"},
         "notes": {"type": "array", "items": {"type": "string"}, "description": "2-4 practical planning notes (water, food, wind, heat, climbing, ferries) specific to this route; no invented numbers"},
         "days_hint": {"type": ["string", "null"], "description": "Typical duration ONLY if a source states it, else null"},
+        "waypoints": {"type": "array", "items": {"type": "string"},
+                      "description": "8-30 towns/places the route passes, IN ORDER from start to end, each as 'Place, Country' (geocodable), taken from the sources"},
         "osm_relations": {"type": "array", "items": {"type": "integer"},
                           "description": "OpenStreetMap relation id(s) of this route ONLY if you saw them on an openstreetmap.org/relation/<id> link or waymarkedtrails page; else []"},
         "sources": {"type": "array", "items": {"type": "object", "properties": {"title": {"type": "string"}, "url": {"type": "string"}},
@@ -153,6 +155,11 @@ def main() -> None:
             rel = [int(x) for x in (r.pop("osm_relations", None) or []) if str(x).isdigit()]
             if rel:
                 r["osm"] = {"relations": rel[:5]}
+            wps = [w for w in (r.get("waypoints") or []) if isinstance(w, str) and w.strip()]
+            if len(wps) >= 3:
+                r["waypoints"] = wps[:30]
+            else:
+                r.pop("waypoints", None)
             (DATA / f"{r['slug']}.json").write_text(json.dumps(r, ensure_ascii=False, indent=1), encoding="utf-8")
             made.append(r["slug"])
             print(f"::notice title=Nowa trasa::{r['name']} · {r['distance_km']} km · /routes/{r['slug']}/")

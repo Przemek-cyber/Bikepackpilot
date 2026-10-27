@@ -35,13 +35,16 @@
 
 <h2>Route map</h2>
 <div id="map" class="map" role="img" aria-label="Map of EuroVelo 6 – Atlantic to Black Sea (The Rivers Route)"></div>
-<p class="muted small">Route line: © <a href="https://www.openstreetmap.org/copyright" rel="nofollow">OpenStreetMap</a> contributors (ODbL), simplified – for planning, not navigation. Map style: CyclOSM.</p>
+<p class="muted small">Route line from OpenStreetMap, simplified – for planning, not navigation. Data © <a href="https://www.openstreetmap.org/copyright" rel="nofollow">OpenStreetMap</a> contributors (ODbL). Map style: CyclOSM.</p>
 <script>window.addEventListener('load',function(){if(!window.L)return;
 var m=L.map('map',{scrollWheelZoom:false});
 L.tileLayer('https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png',{maxZoom:18,
 attribution:'<a href="https://www.cyclosm.org">CyclOSM</a> | © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(m);
 fetch('/routes/geo/eurovelo-6-atlantic-black-sea.json').then(function(r){return r.json();}).then(function(g){
-var layer=L.geoJSON(g,{style:{color:'#C97A2B',weight:4,opacity:.9}}).addTo(m);m.fitBounds(layer.getBounds(),{padding:[16,16]});});});</script>
+var layer=L.geoJSON(g,{style:function(f){var k=f.properties&&f.properties.kind;
+return k==='gap'?{color:'#C97A2B',weight:3,opacity:.8,dashArray:'6 8'}:{color:'#C97A2B',weight:4,opacity:.9};},
+pointToLayer:function(f,ll){return L.circleMarker(ll,{radius:5,color:'#182420',weight:2,fillColor:'#ECE7DA',fillOpacity:1}).bindTooltip(f.properties.name);}}).addTo(m);
+m.fitBounds(layer.getBounds(),{padding:[16,16]});});});</script>
 
 <h2>Key facts</h2>
 <table class="facts"><tr><th>Distance</th><td>about 4,700 km per the official EuroVelo site (Wikipedia lists 3,653 km; other sources say roughly 3,600–4,450 km)</td></tr><tr><th>Start</th><td>Nantes / Saint-Brevin-les-Pins, France (Atlantic coast)</td></tr><tr><th>Finish</th><td>Constanța, Romania (Black Sea)</td></tr><tr><th>Countries</th><td>France, Switzerland, Germany, Austria, Slovakia, Hungary, Croatia, Serbia, Bulgaria, Romania</td></tr><tr><th>Surface</th><td>70% asphalt, 25% gravel, 5% technical gravel (estimated mix for this plan)</td></tr></table>

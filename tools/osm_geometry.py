@@ -128,6 +128,78 @@ def build(route: dict) -> dict | None:
             "geometry": {"type": "MultiLineString", "coordinates": simple}}
 
 
+def geocode(place: str) -> tuple[float, float]:
+    r = requests.get("https://nominatim.openstreetmap.org/search", params={"q": place, "format": "json", "limit": 1},
+                     headers=UA, timeout=60)
+    time.sleep(1.2)  # Nominatim: max 1 request per second
+    js = r.json() if r.status_code == 200 else []
+    if not js:
+        raise RuntimeError(f"place not found: {place}")
+    return float(js[0]["lat"]), float(js[0]["lon"])
+
+
+def brouter_leg(a: tuple, b: tuple) -> list[tuple] | None:
+    """Bike route between two points (BRouter, trekking profile); None if it fails (e.g. a ferry)."""
+    url = f"https://brouter.de/brouter?lonlats={a[1]},{a[0]}|{b[1]},{b[0]}&profile=trekking&alternativeidx=0&format=geojson"
+    for attempt in range(3):
+        try:
+            r = requests.get(url, headers=UA, timeout=180)
+            if r.status_code == 200:
+                coords = r.json()["features"][0]["geometry"]["coordinates"]
+                return [(round(c[1], 4), round(c[0], 4)) for c in coords]
+        except (requests.RequestException, ValueError, KeyError, IndexError):
+            pass
+        time.sleep(10 * (attempt + 1))
+    return None
+
+
+def build_from_waypoints(route: dict) -> dict:
+    """Approximate line through the route's main towns, routed for bikes; legs that can't be routed
+    (ferries, missing roads) are drawn as straight dashed lines."""
+    names = route["waypoints"]
+    pts = [geocode(n) for n in names]
+    routed, straight, total = [], [], 0.0
+    for a, b in zip(pts, pts[1:]):
+        leg = brouter_leg(a, b)
+        direct = hav(a, b)
+        if leg and len(leg) >= 2:
+            km = sum(hav(leg[i], leg[i + 1]) for i in range(len(leg) - 1))
+            if km <= max(direct * 3.5, direct + 40):  # sanity: no absurd detours
+                routed.append(leg)
+                total += km
+                time.sleep(2)
+                continue
+        straight.append([a, b])
+        total += direct
+        time.sleep(2)
+    step = max(0.05, total / 6000)
+    lines = []
+    for pts_ in stitch(routed):
+        keep, acc = [pts_[0]], 0.0
+        for x, y in zip(pts_, pts_[1:]):
+            acc += hav(x, y)
+            if acc >= step:
+                keep.append(y)
+                acc = 0.0
+        if keep[-1] != pts_[-1]:
+            keep.append(pts_[-1])
+        lines.append([[lon, lat] for lat, lon in keep])
+    lats = [p[0] for p in pts]
+    lons = [p[1] for p in pts]
+    for l in lines:
+        lats += [c[1] for c in l]
+        lons += [c[0] for c in l]
+    return {"type": "FeatureCollection", "properties": {"source": "waypoints", "osm_km": round(total),
+                                                       "ratio": round(total / route["distance_km"], 2),
+                                                       "bounds": [[min(lats), min(lons)], [max(lats), max(lons)]]},
+            "features": [
+                {"type": "Feature", "properties": {"kind": "route"}, "geometry": {"type": "MultiLineString", "coordinates": lines}},
+                {"type": "Feature", "properties": {"kind": "gap"},
+                 "geometry": {"type": "MultiLineString", "coordinates": [[[a[1], a[0]], [b[1], b[0]]] for a, b in straight]}},
+            ] + [{"type": "Feature", "properties": {"kind": "stop", "name": n.split(",")[0]},
+                  "geometry": {"type": "Point", "coordinates": [p[1], p[0]]}} for n, p in zip(names, pts)]}
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--discover", action="append")
@@ -145,15 +217,15 @@ def main() -> None:
     for f in sorted(DATA.glob("*.json")):
         r = json.loads(f.read_text())
         out = GEO / f"{r['slug']}.json"
-        if not r.get("osm") or (out.exists() and not a.force):
+        if not (r.get("osm") or r.get("waypoints")) or (out.exists() and not a.force):
             continue
         try:
-            g = build(r)
+            g = build(r) if r.get("osm") else build_from_waypoints(r)
             if not 0.5 <= g["properties"]["ratio"] <= 2.6:
                 print(f"::warning title=Mapa pominięta: {r['short']}::OSM {g['properties']['osm_km']} km vs {r['distance_km']} km")
                 continue
             out.write_text(json.dumps(g, separators=(",", ":")), encoding="utf-8")
-            print(f"::notice title=Mapa: {r['short']}::{g['properties']['osm_km']} km z OSM, {sum(len(l) for l in g['geometry']['coordinates'])} punktów")
+            print(f"::notice title=Mapa: {r['short']}::{g['properties']['osm_km']} km ({g['properties'].get('source', 'osm')})")
         except Exception as e:
             print(f"::warning title=Mapa nieudana: {r['short']}::{type(e).__name__}: {str(e)[:300]}")
         time.sleep(10)

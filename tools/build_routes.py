@@ -173,18 +173,26 @@ def route_page(route: dict, others: list[dict]) -> str:
         ]}
     extra = f'<script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>'
     map_html = ""
-    if (ROOT / "routes" / "geo" / f"{route['slug']}.json").exists():
+    geo_file = ROOT / "routes" / "geo" / f"{route['slug']}.json"
+    if geo_file.exists():
+        approx = json.loads(geo_file.read_text()).get("properties", {}).get("source") == "waypoints"
+        note = ("Approximate line through the main towns on the route, routed for bikes with BRouter on OpenStreetMap data; "
+                "dashed = ferry or unrouted link. For planning, not navigation." if approx else
+                "Route line from OpenStreetMap, simplified – for planning, not navigation.")
         extra += ('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">'
                   '<script defer src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>')
         map_html = f"""<h2>Route map</h2>
 <div id="map" class="map" role="img" aria-label="Map of {esc(route['name'])}"></div>
-<p class="muted small">Route line: © <a href="https://www.openstreetmap.org/copyright" rel="nofollow">OpenStreetMap</a> contributors (ODbL), simplified – for planning, not navigation. Map style: CyclOSM.</p>
+<p class="muted small">{note} Data © <a href="https://www.openstreetmap.org/copyright" rel="nofollow">OpenStreetMap</a> contributors (ODbL). Map style: CyclOSM.</p>
 <script>window.addEventListener('load',function(){{if(!window.L)return;
 var m=L.map('map',{{scrollWheelZoom:false}});
 L.tileLayer('https://{{s}}.tile-cyclosm.openstreetmap.fr/cyclosm/{{z}}/{{x}}/{{y}}.png',{{maxZoom:18,
 attribution:'<a href="https://www.cyclosm.org">CyclOSM</a> | © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}}).addTo(m);
 fetch('/routes/geo/{route['slug']}.json').then(function(r){{return r.json();}}).then(function(g){{
-var layer=L.geoJSON(g,{{style:{{color:'#C97A2B',weight:4,opacity:.9}}}}).addTo(m);m.fitBounds(layer.getBounds(),{{padding:[16,16]}});}});}});</script>"""
+var layer=L.geoJSON(g,{{style:function(f){{var k=f.properties&&f.properties.kind;
+return k==='gap'?{{color:'#C97A2B',weight:3,opacity:.8,dashArray:'6 8'}}:{{color:'#C97A2B',weight:4,opacity:.9}};}},
+pointToLayer:function(f,ll){{return L.circleMarker(ll,{{radius:5,color:'#182420',weight:2,fillColor:'#ECE7DA',fillOpacity:1}}).bindTooltip(f.properties.name);}}}}).addTo(m);
+m.fitBounds(layer.getBounds(),{{padding:[16,16]}});}});}});</script>"""
     return head(title, desc, path, extra) + f"""
 <nav class="crumbs"><a href="/routes/">Route plans</a> › {esc(route['short'])}</nav>
 <article>
