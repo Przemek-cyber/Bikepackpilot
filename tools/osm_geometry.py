@@ -26,7 +26,7 @@ UA = {"User-Agent": "bikepackpilot.com route maps (github.com/Przemek-cyber/Bike
 
 def overpass(q: str) -> dict:
     last = ""
-    for attempt in range(6):
+    for attempt in range(3):
         url = ENDPOINTS[attempt % len(ENDPOINTS)]
         try:
             r = requests.post(url, data={"data": q}, headers=UA, timeout=300)
@@ -40,7 +40,7 @@ def overpass(q: str) -> dict:
 
 
 def discover(flt: str) -> None:
-    res = overpass(f"[out:json][timeout:120];relation{flt};out tags;")
+    res = overpass(f"[out:json][timeout:180];relation{flt};out tags;")
     for el in res.get("elements", [])[:25]:
         t = el.get("tags", {})
         info = {k: t.get(k) for k in ("name", "name:en", "ref", "network", "type", "route", "distance") if t.get(k)}
@@ -104,7 +104,10 @@ def main() -> None:
     a = ap.parse_args()
     if a.discover:
         for flt in a.discover:
-            discover(flt)
+            try:
+                discover(flt)
+            except Exception as e:
+                print(f"::warning title=Wyszukiwanie nieudane::{flt} — {str(e)[:200]}")
             time.sleep(5)
         return
     GEO.mkdir(parents=True, exist_ok=True)
