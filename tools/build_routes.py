@@ -172,6 +172,19 @@ def route_page(route: dict, others: list[dict]) -> str:
                 {"@type": "ListItem", "position": 2, "name": route["name"], "item": f"{SITE}{path}"}]},
         ]}
     extra = f'<script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>'
+    map_html = ""
+    if (ROOT / "routes" / "geo" / f"{route['slug']}.json").exists():
+        extra += ('<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">'
+                  '<script defer src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>')
+        map_html = f"""<h2>Route map</h2>
+<div id="map" class="map" role="img" aria-label="Map of {esc(route['name'])}"></div>
+<p class="muted small">Route line: © <a href="https://www.openstreetmap.org/copyright" rel="nofollow">OpenStreetMap</a> contributors (ODbL), simplified – for planning, not navigation. Map style: CyclOSM.</p>
+<script>window.addEventListener('load',function(){{if(!window.L)return;
+var m=L.map('map',{{scrollWheelZoom:false}});
+L.tileLayer('https://{{s}}.tile-cyclosm.openstreetmap.fr/cyclosm/{{z}}/{{x}}/{{y}}.png',{{maxZoom:18,
+attribution:'<a href="https://www.cyclosm.org">CyclOSM</a> | © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}}).addTo(m);
+fetch('/routes/geo/{route['slug']}.json').then(function(r){{return r.json();}}).then(function(g){{
+var layer=L.geoJSON(g,{{style:{{color:'#C97A2B',weight:4,opacity:.9}}}}).addTo(m);m.fitBounds(layer.getBounds(),{{padding:[16,16]}});}});}});</script>"""
     return head(title, desc, path, extra) + f"""
 <nav class="crumbs"><a href="/routes/">Route plans</a> › {esc(route['short'])}</nav>
 <article>
@@ -183,6 +196,8 @@ def route_page(route: dict, others: list[dict]) -> str:
 <div class="card warn"><span class="k">{SCENARIOS['tough']['label']}</span><span class="v">{tough:.1f}</span><span class="u">riding days</span><span class="d">{SCENARIOS['tough']['desc']}</span></div>
 </section>
 <p class="muted small">Estimate from BikepackPilot's model: base pace {BASE_PACE} km/day on asphalt, adjusted per 50 km segment for surface{', climbing' if elev else ''}, wind and rain. Rest days not included. Your own numbers will differ – that's what the app is for.</p>
+
+{map_html}
 
 <h2>Key facts</h2>
 <table class="facts">{facts_tbl}</table>
