@@ -10,6 +10,10 @@ on:
       count:
         description: "How many new routes to research (0 = only rebuild pages)"
         default: "1"
+      indexnow_all:
+        description: "Notify Bing/IndexNow about ALL pages (not only changed ones)"
+        type: boolean
+        default: false
   push:
     branches: [main]
     paths: ["routes/data/**", "tools/build_routes.py"]
@@ -25,6 +29,11 @@ jobs:
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Remember starting commit
+        id: start
+        run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -46,3 +55,10 @@ jobs:
           git diff --cached --quiet && exit 0
           git commit -q -m "Route plans: update"
           for i in 1 2 3; do git pull -q --rebase origin main && git push -q origin HEAD:main && break; sleep 5; done
+      - name: Notify search engines (IndexNow → Bing, ChatGPT search)
+        if: always()
+        env:
+          ALL: ${{ inputs.indexnow_all }}
+        run: |
+          sleep 90   # give GitHub Pages time to publish the new pages
+          if [ "$ALL" = "true" ]; then python tools/indexnow.py --all; else python tools/indexnow.py --since ${{ steps.start.outputs.sha }}; fi
