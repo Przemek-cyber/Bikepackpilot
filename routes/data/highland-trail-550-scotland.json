@@ -1,0 +1,69 @@
+{
+ "slug": "highland-trail-550-scotland",
+ "name": "Highland Trail 550",
+ "short": "Highland Trail 550",
+ "start": "Tyndrum, Scotland",
+ "end": "Tyndrum, Scotland",
+ "countries": [
+  "United Kingdom"
+ ],
+ "distance_km": 885,
+ "distance_note": "about 550 miles (885 km); recent GPX versions run roughly 890–912 km",
+ "elevation_gain_m": 16000,
+ "surface_mix": {
+  "asphalt": 20,
+  "gravel": 55,
+  "technical": 25
+ },
+ "surface_is_estimate": true,
+ "summary": "A 550-mile self-supported mountain bike loop from Tyndrum through the remote Scottish Highlands, mixing singletrack, dirt roads and quiet tarmac, with plenty of hike-a-bike. It's one of the toughest bikepacking routes in the UK.",
+ "facts": [
+  "The Highland Trail is a self-supported mountain bike route of 550 miles (885 km) with over 16,000 m of climbing, starting from Tyndrum.",
+  "Alan Goldsmith first conceived it as a training route for the Colorado Trail Race, and it grew into one of the toughest self-supported off-road time trials in the world.",
+  "Most riders in the mass start or time-trial format finish in 4-8 days. The 'summer version' touring route suggests 40-50 miles a day over 11-14 days.",
+  "The majority of the route is on good trails and quiet roads, but it includes some boggy and very technical sections."
+ ],
+ "notes": [
+  "Expect hike-a-bike on the most spectacular sections, notably the Fisherfield crossing and the Achnashellach/Torridon area. Weather is changeable, so carry proper wet and cold gear.",
+  "Tyndrum is reachable by train from Glasgow, which takes a few hours. Bike space is limited, so reserve ahead."
+ ],
+ "days_hint": "4-8 days for fast riders; 11-14 days as a touring trip",
+ "sources": [
+  {
+   "title": "The Highland Trail 550, Scotland - BIKEPACKING.com",
+   "url": "https://bikepacking.com/routes/highland-trail-550/"
+  },
+  {
+   "title": "2024 Highland Trail 550 - BIKEPACKING.com",
+   "url": "https://bikepacking.com/event/2024-highland-trail-550/"
+  },
+  {
+   "title": "2026 Highland Trail 550 (HT550) - BIKEPACKING.com",
+   "url": "https://bikepacking.com/tracker/2026-ht550/"
+  },
+  {
+   "title": "Highland 550 Trail - Rough Ride Guide",
+   "url": "https://www.roughrideguide.co.uk/route-details/913"
+  }
+ ],
+ "waypoints": [
+  "Tyndrum, United Kingdom",
+  "Ben Alder, United Kingdom",
+  "Fort Augustus, United Kingdom",
+  "Contin, United Kingdom",
+  "Strathpeffer, United Kingdom",
+  "Oykel Bridge, United Kingdom",
+  "Kylesku, United Kingdom",
+  "Drumbeg, United Kingdom",
+  "Lochinver, United Kingdom",
+  "Ullapool, United Kingdom",
+  "Kinlochewe, United Kingdom",
+  "Torridon, United Kingdom",
+  "Strathcarron, United Kingdom",
+  "Dornie, United Kingdom",
+  "Glen Affric, United Kingdom",
+  "Fort Augustus, United Kingdom",
+  "Fort William, United Kingdom",
+  "Tyndrum, United Kingdom"
+ ]
+}
