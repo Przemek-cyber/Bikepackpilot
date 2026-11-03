@@ -1,0 +1,88 @@
+{
+ "slug": "north-sea-cycle-route-eurovelo-12",
+ "name": "North Sea Cycle Route (EuroVelo 12)",
+ "short": "North Sea Cycle Route",
+ "start": "Bergen, Norway (circuit; start point is arbitrary)",
+ "end": "Bergen, Norway (circuit; the route links to Orkney and Shetland, with a ferry to Norway)",
+ "countries": [
+  "Norway",
+  "Sweden",
+  "Denmark",
+  "Germany",
+  "Netherlands",
+  "Belgium",
+  "France",
+  "United Kingdom"
+ ],
+ "distance_km": 7250,
+ "distance_note": "about 7,250 km on the current official EuroVelo listing (older sources say about 6,000 km or 5,942 km)",
+ "elevation_gain_m": null,
+ "surface_mix": {
+  "asphalt": 85,
+  "gravel": 13,
+  "technical": 2
+ },
+ "surface_is_estimate": true,
+ "summary": "EuroVelo 12 is a signposted circuit around the North Sea coast, linking Norway, Sweden, Denmark, Germany, the Netherlands, Belgium, France and the UK. It is billed as the longest signposted cycle route in the world.",
+ "facts": [
+  "The official EuroVelo listing gives the route as 7,250 km; older sources quote about 6,000 km or 5,942 km, so published lengths differ.",
+  "The route forms a circuit around the North Sea and passes through eight countries, including both England and Scotland in the UK.",
+  "The German section is roughly 920 km, running from Bad Nieuweschans via Emden, Bremerhaven, Cuxhaven and Hamburg to Ruttebüll at the Danish border, mostly on tarmac.",
+  "Landscapes range from below-sea-level Netherlands to high cliffs and fjords in Norway."
+ ],
+ "notes": [
+  "The route is built from national routes, so signs and route names change at each border; check the local numbering as you cross.",
+  "The southern coast (Netherlands, Belgium, northern France) and the Schleswig-Holstein coast are flat, while Norway and Scotland are much hillier.",
+  "Expect open, exposed coastline in many places, so wind direction can matter a lot on the dykes and beaches."
+ ],
+ "days_hint": "60 to 90 days for experienced cyclists riding around 70–100 km per day (one tour operator's estimate)",
+ "sources": [
+  {
+   "title": "EuroVelo 12 – North Sea Cycle Route (official EuroVelo site)",
+   "url": "https://en.eurovelo.com/ev12"
+  },
+  {
+   "title": "EV12 North Sea Cycle Route – Wikipedia",
+   "url": "https://en.wikipedia.org/wiki/EV12_North_Sea_Cycle_Route"
+  },
+  {
+   "title": "North Sea Cycle Route – Germany Travel",
+   "url": "https://www.germany.travel/en/nature-outdoor-activities/north-sea-cycle-route.html"
+  },
+  {
+   "title": "EuroVelo 12 – VeloPlanner",
+   "url": "https://veloplanner.com/groups/eurovelo-12-north-sea-cycle-route"
+  }
+ ],
+ "waypoints": [
+  "Bergen, Norway",
+  "Stavanger, Norway",
+  "Lindesnes, Norway",
+  "Kristiansand, Norway",
+  "Svinesund, Norway",
+  "Gothenburg, Sweden",
+  "Halmstad, Sweden",
+  "Helsingborg, Sweden",
+  "Ruttebüll, Denmark",
+  "Dagebüll, Germany",
+  "Husum, Germany",
+  "St. Peter-Ording, Germany",
+  "Hamburg, Germany",
+  "Cuxhaven, Germany",
+  "Bremerhaven, Germany",
+  "Emden, Germany",
+  "Bad Nieuweschans, Netherlands",
+  "Callantsoog, Netherlands",
+  "Den Helder, Netherlands",
+  "Sluis, Netherlands",
+  "Harwich, England",
+  "Berwick-upon-Tweed, England",
+  "Orkney, Scotland",
+  "Shetland, Scotland"
+ ],
+ "osm": {
+  "relations": [
+   1207220
+  ]
+ }
+}

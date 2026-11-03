@@ -12,4 +12,5 @@
 - [Green Velo – Eastern Cycling Trail](https://bikepackpilot.com/routes/green-velo-eastern-poland/): 1,981 km, Elbląg, Poland → Końskie, Poland
 - [Hebridean Way Cycling Route](https://bikepackpilot.com/routes/hebridean-way-cycling/): 297 km, Vatersay, Outer Hebrides → Butt of Lewis, Outer Hebrides
 - [Highland Trail 550](https://bikepackpilot.com/routes/highland-trail-550-scotland/): 885 km, Tyndrum, Scotland → Tyndrum, Scotland
+- [North Sea Cycle Route (EuroVelo 12)](https://bikepackpilot.com/routes/north-sea-cycle-route-eurovelo-12/): 7,250 km, Bergen, Norway (circuit; start point is arbitrary) → Bergen, Norway (circuit; the route links to Orkney and Shetland, with a ferry to Norway)
 - [Tour Divide – Great Divide Mountain Bike Route](https://bikepackpilot.com/routes/tour-divide-great-divide-route/): 4,425 km, Banff, Alberta, Canada → Antelope Wells, New Mexico, USA
