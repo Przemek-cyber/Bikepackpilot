@@ -4,7 +4,6 @@
 
 ## Route plans
 
-- [Baltic Trail – Szlak Rowerowy Wokół Bałtyku (R10 / EuroVelo 10 / Velo Baltica, Poland)](https://bikepackpilot.com/routes/r10-baltic-trail-poland-eurovelo-10/): 588 km, Świnoujście, Poland → Braniewo, Poland
 - [Camino Francés by Bike](https://bikepackpilot.com/routes/camino-frances-by-bike/): 769 km, Saint-Jean-Pied-de-Port, France → Santiago de Compostela, Spain
 - [Danube Cycle Path – Passau to Vienna](https://bikepackpilot.com/routes/danube-cycle-path-passau-vienna/): 333 km, Passau, Germany → Vienna, Austria
 - [EuroVelo 10 – Baltic Sea Cycle Route (Poland section, Velo Baltica)](https://bikepackpilot.com/routes/eurovelo-10-baltic-sea-poland/): 588 km, Świnoujście (German border), Poland → Gronowo (Kaliningrad border), Poland

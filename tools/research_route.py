@@ -78,7 +78,12 @@ def call(messages: list, tools: list) -> dict:
 def research(route_name: str) -> dict:
     tools = [{"type": "web_search_20250305", "name": "web_search", "max_uses": 8},
              {"name": "save_route", "description": "Save the researched route data.", "input_schema": SCHEMA}]
-    messages = [{"role": "user", "content": f"Research this route and save it: {route_name}"}]
+    existing = [json.loads(f.read_text())["name"] for f in DATA.glob("*.json")]
+    messages = [{"role": "user", "content": (
+        f"Research this route and save it: {route_name}\n\nRoutes already published (do NOT duplicate): "
+        + "; ".join(existing)
+        + "\nIf the requested route is the same route as one of these (same path, even under another name or as a section of it), "
+          "call save_route with slug 'duplicate' and minimal placeholder values.")}]
     for _ in range(6):
         resp = call(messages, tools)
         for block in resp.get("content", []):
@@ -121,6 +126,8 @@ def verify(route: dict) -> dict:
 
 
 def validate(r: dict) -> None:
+    if r.get("slug") == "duplicate":
+        raise ValueError("same route already published")
     if not re.fullmatch(r"[a-z0-9]+(-[a-z0-9]+)*", r["slug"]) or len(r["slug"]) > 70:
         raise ValueError(f"bad slug {r['slug']}")
     if (DATA / f"{r['slug']}.json").exists():
