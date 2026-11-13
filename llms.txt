@@ -14,3 +14,4 @@
 - [Highland Trail 550](https://bikepackpilot.com/routes/highland-trail-550-scotland/): 885 km, Tyndrum, Scotland → Tyndrum, Scotland
 - [North Sea Cycle Route (EuroVelo 12)](https://bikepackpilot.com/routes/north-sea-cycle-route-eurovelo-12/): 7,250 km, Bergen, Norway (circuit; start point is arbitrary) → Bergen, Norway (circuit; the route links to Orkney and Shetland, with a ferry to Norway)
 - [Tour Divide – Great Divide Mountain Bike Route](https://bikepackpilot.com/routes/tour-divide-great-divide-route/): 4,425 km, Banff, Alberta, Canada → Antelope Wells, New Mexico, USA
+- [Trans-Dolomiti Bikepacking Loop](https://bikepackpilot.com/routes/trans-dolomiti-bikepacking-loop/): 262 km, Brixen (Bressanone), Italy → Brixen (Bressanone), Italy

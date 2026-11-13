@@ -1,0 +1,62 @@
+{
+ "slug": "trans-dolomiti-bikepacking-loop",
+ "name": "Trans-Dolomiti Bikepacking Loop",
+ "short": "Trans-Dolomiti Loop",
+ "start": "Brixen (Bressanone), Italy",
+ "end": "Brixen (Bressanone), Italy",
+ "countries": [
+  "Italy"
+ ],
+ "distance_km": 262,
+ "distance_note": "about 262 km (163 mi)",
+ "elevation_gain_m": 9529,
+ "surface_mix": {
+  "asphalt": 44,
+  "gravel": 47,
+  "technical": 9
+ },
+ "surface_is_estimate": false,
+ "summary": "A hard 262 km mountain-bike loop from Brixen through the Dolomites, linking forest tracks, dirt roads and singletrack, with options to stay in mountain huts. Ride it clockwise.",
+ "facts": [
+  "Bikepacking.com lists the loop at 262 km with 9,529 m of total ascent, and a high point of 2,422 m.",
+  "The same source gives the surface as 56% unpaved and 9% singletrack, with 97% rideable by time. It rates the difficulty 7 out of 10.",
+  "The route is based on a semi-official, non-signposted route found online. It was already popular as a hut-to-hut route, but Bikepacking.com says it hadn't been bikepacked before.",
+  "Bikepacking.com recommends riding clockwise because the climbs are easier that way. Brixen is the suggested start because it has a train station and all services.",
+  "A typical split is 5–6 days. One Komoot version breaks it into six stages: Brixen, St. Magdalena, St. Kassian, Selva di Cadore, Sottoguda, Kolfuschg and back to Brixen.",
+  "Bikepacking.com's editors describe the riding as a mix of forest tracks, coarse dirt roads and flowy trails, with chances to overnight in historic mountain refuges."
+ ],
+ "notes": [
+  "Bring a mountain bike with front suspension or a lightweight full-suspension bike. The long descents are often rocky, and Bikepacking.com says the route isn't suited to gravel bikes.",
+  "Expect some hike-a-bike. Komoot's stage descriptions warn that you may need to push your bike on some segments, and rate the stages as hard with very good fitness required."
+ ],
+ "days_hint": "5-6 days",
+ "sources": [
+  {
+   "title": "Trans-Dolomiti, Italy – Bikepacking.com",
+   "url": "https://bikepacking.com/routes/trans-dolomiti/"
+  },
+  {
+   "title": "Trans-Dolomiti, Italy – Komoot collection",
+   "url": "https://www.komoot.com/collection/3020360/-trans-dolomiti-italy"
+  },
+  {
+   "title": "Italy – Trans-Dolomiti – Irregular Adventures",
+   "url": "https://irregularadventures.com/2021/11/25/italy-trans-dolomiti/"
+  },
+  {
+   "title": "Editors' Picks: Our Favorite Bikepacking Routes – Bikepacking.com",
+   "url": "https://bikepacking.com/plan/our-favorite-bikepacking-routes/"
+  }
+ ],
+ "waypoints": [
+  "Brixen, Italy",
+  "Schlüterhütte, Italy",
+  "St. Magdalena, Villnöss, Italy",
+  "San Cassiano, Italy",
+  "Selva di Cadore, Italy",
+  "Sottoguda, Italy",
+  "Arabba, Italy",
+  "Colfosco, Italy",
+  "Brixen, Italy"
+ ]
+}
