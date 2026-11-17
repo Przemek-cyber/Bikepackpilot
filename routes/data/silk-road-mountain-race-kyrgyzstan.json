@@ -1,0 +1,57 @@
+{
+ "slug": "silk-road-mountain-race-kyrgyzstan",
+ "name": "Silk Road Mountain Race Route (Kyrgyzstan, 2026 edition)",
+ "short": "Silk Road Mountain Race",
+ "start": "Talas, Kyrgyzstan",
+ "end": "Cholpon-Ata, Kyrgyzstan",
+ "countries": [
+  "Kyrgyzstan"
+ ],
+ "distance_km": 2052,
+ "distance_note": "about 2,052 km for the 2026 edition (the route changes yearly, typically around 1,900 km)",
+ "elevation_gain_m": 35362,
+ "surface_mix": {
+  "asphalt": 20,
+  "gravel": 60,
+  "technical": 20
+ },
+ "surface_is_estimate": true,
+ "summary": "A fixed-route, unsupported bikepacking race through Kyrgyzstan's Tian Shan mountains. The 2026 edition runs 2,052 km from Talas to Cholpon-Ata on Lake Issyk-Kul, on gravel, old Soviet roads and some hike-a-bike.",
+ "facts": [
+  "The Silk Road Mountain Race is a fixed-route, unsupported, single-stage cycling race through the mountains of Kyrgyzstan. The clock doesn't stop and there are no prizes.",
+  "The route changes every year. Riders can usually expect about 1,900 km, 30,000 m of climbing and around 14 days, according to the organisers.",
+  "The eighth edition (2026) is 2,052 km with roughly 35,362 m of climbing. It starts in Talas in the northwest and finishes in Cholpon-Ata on the north shore of Lake Issyk-Kul.",
+  "It follows gravel, single and double track and old Soviet roads that have fallen into disrepair, with very little tarmac. There is some hike-a-bike and long gaps between resupply points."
+ ],
+ "notes": [
+  "Resupply can be very sparse between towns, so carry extra food and plan water stops carefully, especially on remote high sections.",
+  "Expect hike-a-bike sections and rough, damaged old Soviet roads. Gearing, tyre width and bike choice matter more than speed.",
+  "The course changes every year, so check the official Mountain Races site for the current GPX and checkpoint details before planning a tour of your own."
+ ],
+ "days_hint": "About 14 days (race format; the 2026 time limit was around 14 days)",
+ "waypoints": [
+  "Talas, Kyrgyzstan",
+  "Son-Kul, Kyrgyzstan",
+  "Kel-Suu, Kyrgyzstan",
+  "Tamga, Kyrgyzstan",
+  "Cholpon-Ata, Kyrgyzstan"
+ ],
+ "sources": [
+  {
+   "title": "The Mountain Races – Silk Road Mountain Race",
+   "url": "https://www.themountainraces.cc/silk-road-mountain-race"
+  },
+  {
+   "title": "The Mountain Races – SRMR 2026",
+   "url": "https://www.themountainraces.cc/srmr2026"
+  },
+  {
+   "title": "Silk Road Mountain Race 2026 – MAProgress",
+   "url": "https://srmr2026.maprogress.com/"
+  },
+  {
+   "title": "Silk Road Mountain Race route map and checkpoints – GOAT Maps",
+   "url": "https://www.goatmaps.com/races/silk-road-mountain-race"
+  }
+ ]
+}
