@@ -1,0 +1,62 @@
+{
+ "slug": "pamir-highway-dushanbe-osh",
+ "name": "Pamir Highway (M41) – Dushanbe to Osh",
+ "short": "Pamir Highway",
+ "start": "Dushanbe, Tajikistan",
+ "end": "Osh, Kyrgyzstan",
+ "countries": [
+  "Tajikistan",
+  "Kyrgyzstan"
+ ],
+ "distance_km": 1250,
+ "distance_note": "about 1,250 km (guides give 1,250–1,320 km depending on the variant)",
+ "elevation_gain_m": null,
+ "surface_mix": {
+  "asphalt": 70,
+  "gravel": 25,
+  "technical": 5
+ },
+ "surface_is_estimate": true,
+ "summary": "A legendary high-altitude road across the Pamir Mountains from Dushanbe in Tajikistan to Osh in Kyrgyzstan. It's remote and demanding, with passes above 4,000 m, rough sections and very little traffic.",
+ "facts": [
+  "The M41, better known as the Pamir Highway, crosses the Pamir Mountains and is over 1,200 km long. It is described as the second-highest international highway in the world, reaching 4,655 m (Wikipedia).",
+  "The usual cycling route runs Dushanbe – Khorog – Alichur – Murghab – Sary-Tash – Osh, and most bikepackers ride it west to east from Dushanbe, which is easier on acclimatisation (Journey Beyond Horizon; Journal of Nomads).",
+  "Dushanbe sits at about 706 m, while Osh is at 963 m and Sary-Tash is at 3,170 m. Starting in Dushanbe lets you gain altitude gradually (Journal of Nomads).",
+  "The Ak-Baital Pass is the highest pass on the route. The Kyzyl-Art Pass (4,282 m) is the last big climb before Sary-Tash (Komoot; Journey Beyond Horizon)."
+ ],
+ "notes": [
+  "Altitude: much of the road sits around 2,800–3,000 m, and the Pamir plateau is about 3,500 m, with passes above 4,500 m. Plan acclimatisation days, especially if you start from Osh and jump up to Sary-Tash."
+ ],
+ "days_hint": "Cyclists typically take around 30 days (Journal of Nomads); one guide suggests at least 10–14 days for strong riders, and Komoot says most people take 17–38 days.",
+ "sources": [
+  {
+   "title": "M41 highway – Wikipedia",
+   "url": "https://en.wikipedia.org/wiki/M41_highway"
+  },
+  {
+   "title": "How To Travel The Pamir Highway In Tajikistan – Journal of Nomads",
+   "url": "https://www.journalofnomads.com/how-to-travel-the-pamir-highway-tajikistan/"
+  },
+  {
+   "title": "Pamir Highway — expedition overview & practical guide – Journey Beyond Horizon",
+   "url": "https://journeybeyondhorizon.com/traveling-the-pamir-highway-overview/"
+  },
+  {
+   "title": "Cycling the Pamir Highway – Along the Earth",
+   "url": "https://alongtheearth.com/cycling-the-pamir-highway/"
+  }
+ ],
+ "waypoints": [
+  "Dushanbe, Tajikistan",
+  "Vahdat, Tajikistan",
+  "Tavildara, Tajikistan",
+  "Kalaikhum, Tajikistan",
+  "Rushan, Tajikistan",
+  "Khorog, Tajikistan",
+  "Alichur, Tajikistan",
+  "Murghab, Tajikistan",
+  "Karakul, Tajikistan",
+  "Sary-Tash, Kyrgyzstan",
+  "Osh, Kyrgyzstan"
+ ]
+}

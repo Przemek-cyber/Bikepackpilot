@@ -13,6 +13,7 @@
 - [Hebridean Way Cycling Route](https://bikepackpilot.com/routes/hebridean-way-cycling/): 297 km, Vatersay, Outer Hebrides → Butt of Lewis, Outer Hebrides
 - [Highland Trail 550](https://bikepackpilot.com/routes/highland-trail-550-scotland/): 885 km, Tyndrum, Scotland → Tyndrum, Scotland
 - [North Sea Cycle Route (EuroVelo 12)](https://bikepackpilot.com/routes/north-sea-cycle-route-eurovelo-12/): 7,250 km, Bergen, Norway (circuit; start point is arbitrary) → Bergen, Norway (circuit; the route links to Orkney and Shetland, with a ferry to Norway)
+- [Pamir Highway (M41) – Dushanbe to Osh](https://bikepackpilot.com/routes/pamir-highway-dushanbe-osh/): 1,250 km, Dushanbe, Tajikistan → Osh, Kyrgyzstan
 - [Silk Road Mountain Race Route (Kyrgyzstan, 2026 edition)](https://bikepackpilot.com/routes/silk-road-mountain-race-kyrgyzstan/): 2,052 km, Talas, Kyrgyzstan → Cholpon-Ata, Kyrgyzstan
 - [Tour Divide – Great Divide Mountain Bike Route](https://bikepackpilot.com/routes/tour-divide-great-divide-route/): 4,425 km, Banff, Alberta, Canada → Antelope Wells, New Mexico, USA
 - [Trans-Dolomiti Bikepacking Loop](https://bikepackpilot.com/routes/trans-dolomiti-bikepacking-loop/): 262 km, Brixen (Bressanone), Italy → Brixen (Bressanone), Italy
